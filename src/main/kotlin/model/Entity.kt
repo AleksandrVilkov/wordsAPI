@@ -7,7 +7,7 @@ enum class GameStatus {
 }
 
 
-class User(
+data class User(
     val uid: String = UUID.randomUUID().toString(),
     val login: String,
     var pass: String,

@@ -1,4 +1,4 @@
-package model.dataBase
+package repository
 
 import java.sql.ResultSet
 

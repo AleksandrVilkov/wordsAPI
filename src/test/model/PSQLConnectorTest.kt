@@ -1,6 +1,6 @@
 package model
 
-import model.dataBase.PSQLConnector
+import model.repository.PSQLConnector
 import org.junit.jupiter.api.Test
 
 class PSQLConnectorTest {

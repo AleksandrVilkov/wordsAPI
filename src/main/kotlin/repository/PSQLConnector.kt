@@ -1,8 +1,8 @@
-package model.dataBase
+package model.repository
 
-import jdk.jfr.FlightRecorder.isInitialized
 import model.logger.Logger
 import org.postgresql.util.PSQLException
+import repository.DataBaseConnector
 import java.io.FileInputStream
 import java.sql.Connection
 import java.sql.DriverManager

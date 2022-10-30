@@ -1,6 +1,6 @@
-package controllers
+package controller
 
-import controllers.entityVO.Response
+import controller.entityVO.Response
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping

@@ -2,6 +2,7 @@ package model.logger
 
 import java.util.*
 
+//TODO  + сохранять в файл
 class Logger(
     val className: String
 ) {

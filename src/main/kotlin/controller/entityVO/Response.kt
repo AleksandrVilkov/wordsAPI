@@ -1,4 +1,4 @@
-package controllers.entityVO
+package controller.entityVO
 
 
 data class Response(

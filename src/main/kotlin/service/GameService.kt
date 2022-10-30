@@ -1,7 +1,7 @@
 package model
 
 import model.Entity.Game
-import model.dataBase.DataBaseProxyConnector
+import service.DataBaseProxyConnector
 
 fun createGameInDataBase(game: Game, dbConnector: DataBaseProxyConnector) {
     val tableName = dbConnector.getProperties().getProperty("gamesTable")

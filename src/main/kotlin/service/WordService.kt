@@ -1,7 +1,7 @@
 package model
 
 import model.Entity.Word
-import model.dataBase.DataBaseProxyConnector
+import service.DataBaseProxyConnector
 
 fun createWordsInDataBase(words: List<Word>, dbConnector: DataBaseProxyConnector) {
     val tableName = dbConnector.getProperties().getProperty("wordsTable")

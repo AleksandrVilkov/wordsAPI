@@ -1,7 +1,7 @@
 package model
 
 import model.Entity.User
-import model.dataBase.DataBaseProxyConnector
+import service.DataBaseProxyConnector
 import model.logger.Logger
 
 private val logger = Logger("UserManager")

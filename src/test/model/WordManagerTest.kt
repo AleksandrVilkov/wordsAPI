@@ -1,8 +1,7 @@
 package model
 
-import model.dataBase.DataBaseProxyConnector
+import service.DataBaseProxyConnector
 import org.junit.jupiter.api.Test
-import org.springframework.util.Assert
 
 
 class WordManagerTest {

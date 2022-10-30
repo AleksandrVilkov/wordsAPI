@@ -1,5 +1,6 @@
-package model.dataBase
+package service
 
+import model.repository.PSQLConnector
 import java.sql.ResultSet
 import java.util.*
 

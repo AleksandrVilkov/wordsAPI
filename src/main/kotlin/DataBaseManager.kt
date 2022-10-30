@@ -2,7 +2,7 @@ package com.vilkov.words
 
 import model.Entity.Word
 import model.createWordsInDataBase
-import model.dataBase.DataBaseProxyConnector
+import service.DataBaseProxyConnector
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader

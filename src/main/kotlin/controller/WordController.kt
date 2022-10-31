@@ -18,13 +18,14 @@ class WordController(
 ) {
     @GetMapping("/random")
     fun getRandomWord(): Response {
-       val wordVO = Word(wordServiceImpl.findRandomWord(5).wordValue)
+        val wordVO = Word(wordServiceImpl.findRandomWord(5).wordValue)
         return Response("", "", wordVO)
     }
 
     @GetMapping("/check")
     fun checkWord(): Response {
-        return Response("", "")
+        val wordVO = Word(wordServiceImpl.findWord("Собака").wordValue)
+        return Response("", "", wordVO)
     }
 
     @GetMapping("/guessed")

@@ -73,7 +73,7 @@ data class Word(
     }
 
     override fun getColumn(): String {
-        return "wordValue, countLetters"
+        return "value, countletters"
     }
 
     override fun getValue(): String {

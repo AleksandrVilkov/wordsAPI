@@ -6,18 +6,30 @@ enum class GameStatus {
     IN_GAME, FINISHED, ERROR, NOT_IN_GAME
 }
 
+enum class UserRole {
+    ROLE_USER, ROLE_MODERATOR, ROLE_ADMIN
+}
 
-data class User(
+enum class UserStatus {
+    ACTIVE, NOT_ACTIVE, DELETED, NOT_DETERMINED
+}
+
+
+class User(
     val uid: String = UUID.randomUUID().toString(),
+    val created: Date = Date(),
+    val role: List<UserRole> = listOf(),
+    val status: UserStatus = UserStatus.NOT_DETERMINED,
     val login: String,
-    var pass: String,
-    var guessWord: String? = null,
-    val uidGames: List<String> = mutableListOf()
+    var pass: String
 )
 
 data class Game(
+    //val uid: String = UUID.randomUUID().toString(),
+  //  val created: Date = Date(),
     val userUid: String,
-    val status: GameStatus,
+    val updated: Date,
+  //  val status: GameStatus,
     val time: String,
     val hiddenWord: String,
     val countAttempts: Int
@@ -26,5 +38,4 @@ data class Game(
 data class Word(
     val value: String,
     val countLetters: String,
-    val uid: String = UUID.randomUUID().toString()
 )

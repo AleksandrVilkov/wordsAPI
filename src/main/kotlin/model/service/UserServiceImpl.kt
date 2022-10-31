@@ -1,6 +1,7 @@
 package model.service
 
 import model.Entity.User
+import model.Entity.Word
 import model.logger.Logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -24,17 +25,7 @@ class UserServiceImpl(
     }
 
     override fun findUser(login: String): User? {
-        val result = dbConnector.read(login)
-        val users = mutableListOf<User>()
-        for (any in result)
-            if (any is User) {
-                users.add(any)
-            }
-        return if (users.size == 1) {
-            users[0]
-        } else {
-            null
-        }
+        return null
     }
 
     override fun deleteUser(login: String): Boolean {

@@ -10,8 +10,8 @@ class WordServiceImpl(
     @Autowired
     private val dbConnector: DataBaseConnector
 ) : WordServiceInterface {
-    override fun createWordsInDataBase(words: List<Word>): Boolean {
-        return dbConnector.save(words)
+    override fun createWordsInDataBase(word: Word) {
+        dbConnector.save(word)
     }
 
     override fun findRandomWord(light: Int): Word {

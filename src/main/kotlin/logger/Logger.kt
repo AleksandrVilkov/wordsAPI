@@ -1,5 +1,6 @@
-package model.logger
+package logger
 
+import org.springframework.stereotype.Component
 import java.util.*
 
 //TODO  + сохранять в файл

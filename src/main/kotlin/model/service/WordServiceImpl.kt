@@ -8,14 +8,21 @@ import org.springframework.stereotype.Component
 @Component
 class WordServiceImpl(
     @Autowired
-    private val dbConnector: DataBaseConnector
+    private val connector: DataBaseConnector
 ) : WordServiceInterface {
-    override fun createWordsInDataBase(word: Word) {
-        dbConnector.save(word)
+    override fun createWord(word: Word) {
+
     }
 
     override fun findRandomWord(light: Int): Word {
-        TODO("Not yet implemented")
+        val result =
+            connector.read(connector.getProperties().getProperty("wordsTable"), "countletters", "$light")
+        val wordList = mutableListOf<Word>()
+        while (result.next()) {
+            wordList.add(Word(result.getString("wordValue"), result.getString("countletters")))
+        }
+        //TODO расчитывать рандомное значение
+        return wordList[1]
     }
 
     override fun findWord(value: String): Word {

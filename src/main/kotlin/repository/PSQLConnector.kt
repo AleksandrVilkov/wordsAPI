@@ -1,6 +1,6 @@
 package model.repository
 
-import model.logger.Logger
+import logger.Logger
 import org.postgresql.util.PSQLException
 import org.springframework.stereotype.Component
 import java.io.FileInputStream
@@ -14,8 +14,8 @@ class PSQLConnector {
 
     private final val props: Properties
     private val filePath = "src/main/resources/psql.properties"
-    private val logger = Logger("PSQLConnector")
     private lateinit var connection: Connection
+    val logger = Logger("PSQLConnector")
 
     init {
         val file = FileInputStream(filePath)
@@ -41,6 +41,9 @@ class PSQLConnector {
         } catch (e: PSQLException) {
             e.message?.let { logger.warn(it) }
         }
+    }
+    fun getProperties(): Properties {
+        return props
     }
 
     private fun getConnector(): Connection {

@@ -1,31 +1,31 @@
 package model.dataBase
 
+import logger.Logger
 import model.Entity.Entity
-import model.Entity.Word
 import model.repository.PSQLConnector
 import model.service.DataBaseConnector
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import java.sql.ResultSet
+import java.util.*
 
 @Component
 class ConnectorProxy(
     @Autowired
     val connector: PSQLConnector
 ) : DataBaseConnector {
+    val logger = Logger("PSQLConnector")
+
     override fun save(data: Entity) {
         val sqlQuery = "INSERT INTO ${data.getTable()}${data.getColumn()} VALUES ${data.getValue()};"
+        logger.debug("sending query $sqlQuery to PSQL")
         connector.sendQueryWithoutResult(sqlQuery)
     }
 
-    //TODO
-    override fun read(data: Entity, whereParams: String): Entity {
-        val result = connector.sendQuery("SELECT * FROM ${data.getTable()} WHERE $whereParams")
-        val entityList = mutableListOf<Entity>()
-        while (result.next()) {
-            result.getString("")
-
-        }
-        return Word("4","5")
+    override fun read(table: String, keyParams: String, valueParams: String): ResultSet {
+        val sqlQuery = "SELECT * FROM $table WHERE $keyParams = $valueParams;"
+        logger.debug("sending query $sqlQuery to PSQL")
+        return connector.sendQuery(sqlQuery)
     }
 
     override fun update(data: Entity): Boolean {
@@ -34,5 +34,9 @@ class ConnectorProxy(
 
     override fun delete(data: Entity): Boolean {
         TODO("Not yet implemented")
+    }
+
+    override fun getProperties(): Properties {
+        return connector.getProperties()
     }
 }

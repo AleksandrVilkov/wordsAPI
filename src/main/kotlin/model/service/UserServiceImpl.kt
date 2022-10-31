@@ -1,8 +1,7 @@
 package model.service
 
 import model.Entity.User
-import model.Entity.Word
-import model.logger.Logger
+import logger.Logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -19,7 +18,7 @@ class UserServiceImpl(
             dbConnector.save(user)
             true
         } else {
-            logger.debug("Пользователь не создан, так как уже сужествует")
+            logger.debug("Пользователь не создан, так как уже существует")
             false
         }
     }

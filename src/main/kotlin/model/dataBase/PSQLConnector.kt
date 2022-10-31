@@ -1,6 +1,5 @@
 package model.dataBase
 
-import jdk.jfr.FlightRecorder.isInitialized
 import model.logger.Logger
 import org.postgresql.util.PSQLException
 import java.io.FileInputStream
@@ -9,7 +8,7 @@ import java.sql.DriverManager
 import java.sql.ResultSet
 import java.util.*
 
-class PSQLConnector : DataBaseConnector {
+class PSQLConnector {
 
     val props: Properties
     private val filePath = "src/main/resources/psql.properties"
@@ -26,13 +25,13 @@ class PSQLConnector : DataBaseConnector {
     }
 
 
-    override fun sendQuery(sqlQuery: String): ResultSet {
+    fun sendQuery(sqlQuery: String): ResultSet {
         val query = getConnector().prepareStatement(sqlQuery)
         logger.debug(sqlQuery)
         return query.executeQuery()
     }
 
-    override fun sendQueryWithoutResult(sqlQuery: String) {
+    fun sendQueryWithoutResult(sqlQuery: String) {
         val query = getConnector().prepareStatement(sqlQuery)
         try {
             logger.debug(sqlQuery)

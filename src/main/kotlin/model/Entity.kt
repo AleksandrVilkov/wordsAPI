@@ -1,6 +1,5 @@
 package model.Entity
 
-import java.rmi.server.UID
 import java.util.*
 
 enum class GameStatus {
@@ -15,7 +14,7 @@ enum class UserStatus {
     ACTIVE, NOT_ACTIVE, DELETED, NOT_DETERMINED
 }
 
-class User(
+data class User(
     val uid: String = UUID.randomUUID().toString(),
     val created: Date = Date(),
     val role: List<UserRole> = listOf(),

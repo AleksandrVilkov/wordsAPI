@@ -1,26 +1,16 @@
 package model.service
 
 import model.Entity.Word
-import model.dataBase.DataBaseProxyConnector
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 
-private val dbConnector = DataBaseProxyConnector()
 
+@Component
 class WordServiceImpl : WordServiceInterface {
+    @Autowired
+    private val dbConnector: DataBaseConnector = TODO()
     override fun createWordsInDataBase(words: List<Word>): Boolean {
-        val tableName = dbConnector.getProperties().getProperty("wordsTable")
-        var query = "INSERT INTO $tableName (value, countletters, uid) VALUES "
-        var iter = 1
-        for (word in words) {
-            query += "('${word}', '${word.countLetters}')"
-            if (iter != words.size) {
-                query += ", "
-            } else {
-                query += ";"
-            }
-            iter++
-        }
-        dbConnector.sendQueryWithoutResult(query)
-        return true
+        return dbConnector.save(words)
     }
 
     override fun findRandomWord(light: Int): Word {

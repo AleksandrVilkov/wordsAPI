@@ -14,7 +14,8 @@ enum class UserStatus {
     ACTIVE, NOT_ACTIVE, DELETED, NOT_DETERMINED
 }
 
-data class User(
+
+class User(
     val uid: String = UUID.randomUUID().toString(),
     val created: Date = Date(),
     val role: List<UserRole> = listOf(),
@@ -24,11 +25,11 @@ data class User(
 )
 
 data class Game(
-    val uid: String = UUID.randomUUID().toString(),
-    val created: Date = Date(),
+    //val uid: String = UUID.randomUUID().toString(),
+  //  val created: Date = Date(),
     val userUid: String,
     val updated: Date,
-    val status: GameStatus,
+  //  val status: GameStatus,
     val time: String,
     val hiddenWord: String,
     val countAttempts: Int

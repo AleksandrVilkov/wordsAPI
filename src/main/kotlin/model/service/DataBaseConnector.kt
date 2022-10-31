@@ -1,6 +1,5 @@
 package model.service
 
-import java.sql.ResultSet
 
 interface DataBaseConnector {
     fun  save(data: Any): Boolean

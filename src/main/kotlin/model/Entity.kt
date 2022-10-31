@@ -25,8 +25,8 @@ class User(
 )
 
 data class Game(
-    //val uid: String = UUID.randomUUID().toString(),
-  //  val created: Date = Date(),
+    val uid: String = UUID.randomUUID().toString(),
+    val created: Date = Date(),
     val userUid: String,
     val updated: Date,
   //  val status: GameStatus,

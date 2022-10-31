@@ -2,11 +2,17 @@ package model.service
 
 import model.Entity.User
 import model.logger.Logger
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 
 
-class UserServiceImpl : UserServiceInterface {
+@Component
+class UserServiceImpl(
+    @Autowired
+    private val dbConnector: DataBaseConnector
+) : UserServiceInterface {
     private val logger = Logger("UserServiceImpl")
-    private val dbConnector: DataBaseConnector = TODO()
+
     override fun registerUser(user: User): Boolean {
         return if (!checkUser(user.login)) {
             dbConnector.save(user)
@@ -17,10 +23,15 @@ class UserServiceImpl : UserServiceInterface {
         }
     }
 
-    override fun findUser(login: String): Any? {
+    override fun findUser(login: String): User? {
         val result = dbConnector.read(login)
-        return if (result.size == 1) {
-            result[0]
+        val users = mutableListOf<User>()
+        for (any in result)
+            if (any is User) {
+                users.add(any)
+            }
+        return if (users.size == 1) {
+            users[0]
         } else {
             null
         }

@@ -1,7 +1,9 @@
 package model.dataBase
 
 import model.service.DataBaseConnector
+import org.springframework.stereotype.Component
 
+@Component
 class ConnectorProxy: DataBaseConnector {
     override fun save(data: Any): Boolean {
         TODO("Not yet implemented")

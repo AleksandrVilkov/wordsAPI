@@ -6,9 +6,10 @@ import org.springframework.stereotype.Component
 
 
 @Component
-class WordServiceImpl : WordServiceInterface {
+class WordServiceImpl(
     @Autowired
-    private val dbConnector: DataBaseConnector = TODO()
+    private val dbConnector: DataBaseConnector
+) : WordServiceInterface {
     override fun createWordsInDataBase(words: List<Word>): Boolean {
         return dbConnector.save(words)
     }

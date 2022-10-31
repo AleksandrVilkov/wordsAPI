@@ -2,16 +2,17 @@ package model.repository
 
 import model.logger.Logger
 import org.postgresql.util.PSQLException
-import repository.DataBaseConnector
+import org.springframework.stereotype.Component
 import java.io.FileInputStream
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
 import java.util.*
 
+@Component
 class PSQLConnector {
 
-    val props: Properties
+    private final val props: Properties
     private val filePath = "src/main/resources/psql.properties"
     private val logger = Logger("PSQLConnector")
     private lateinit var connection: Connection

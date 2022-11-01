@@ -17,7 +17,7 @@ class ConnectorProxy(
     val logger = Logger("PSQLConnector")
 
     override fun save(data: Entity) {
-        val sqlQuery = "INSERT INTO ${data.getTable()}${data.getColumn()} VALUES ${data.getValue()};"
+        val sqlQuery = "INSERT INTO ${data.getTable()}${data.getColumns()} VALUES ${data.getValues()};"
         logger.debug("sending query $sqlQuery to PSQL")
         connector.sendQueryWithoutResult(sqlQuery)
     }

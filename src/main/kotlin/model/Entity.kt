@@ -17,8 +17,8 @@ enum class UserStatus {
 
 interface Entity {
     fun getTable(): String
-    fun getColumn(): String
-    fun getValue(): String
+    fun getColumns(): String
+    fun getValues(): String
 }
 
 class User(
@@ -33,12 +33,12 @@ class User(
         return "users"
     }
 
-    override fun getColumn(): String {
+    override fun getColumns(): String {
         return "(uid, created, role, status, login, pass)"
     }
 
-    override fun getValue(): String {
-        return "($uid, $created, ${role.name}, ${status.name}, $login, $pass)"
+    override fun getValues(): String {
+        return "('$uid', '$created', '${role.name}', '${status.name}', '$login', '$pass')"
     }
 }
 
@@ -56,11 +56,11 @@ data class Game(
         return "games"
     }
 
-    override fun getColumn(): String {
+    override fun getColumns(): String {
         return "(uid, created, userUID, updated, status, time, hiddenWord, countAttempts)"
     }
 
-    override fun getValue(): String {
+    override fun getValues(): String {
         return "($uid, $created, $userUid, $updated, ${status.name}, $time, $hiddenWord, $countAttempts)"
     }
 }
@@ -73,11 +73,11 @@ data class Word(
         return "words"
     }
 
-    override fun getColumn(): String {
+    override fun getColumns(): String {
         return "value, countletters"
     }
 
-    override fun getValue(): String {
+    override fun getValues(): String {
         return "($wordValue, $countLetters)"
     }
 }

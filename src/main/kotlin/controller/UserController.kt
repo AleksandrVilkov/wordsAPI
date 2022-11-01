@@ -3,10 +3,14 @@ package controller
 import controller.entityVO.Response
 import controller.entityVO.Status
 import controller.entityVO.UserVO
+import model.Entity.User
+import model.Entity.UserRole
+import model.Entity.UserStatus
 import model.service.UserServiceInterface
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDate
 
 @Component
 @RestController
@@ -16,8 +20,8 @@ class UserController(
     val userService: UserServiceInterface
 ) {
 
-    @GetMapping("/check/{login}")
-    fun checkUser(@PathVariable login: String): Response {
+    @GetMapping("/check")
+    fun checkUser(@RequestParam login: String): Response {
         val user = userService.findUser(login)
         return if (user != null) {
             Response(
@@ -35,8 +39,15 @@ class UserController(
         }
     }
 
-    @PostMapping("/save")
-    fun saveUser(): Response {
-        return Response(Status.ERROR, "Not implemented")
+    @GetMapping("/save")
+    fun saveUser(@RequestParam login: String, @RequestParam pass: String): Response {
+        userService.registerUser(User(
+            login = login,
+            pass = pass,
+            role = UserRole.ROLE_USER,
+            status = UserStatus.ACTIVE,
+            created = LocalDate.now()
+        ))
+        return Response(Status.ERROR, "Not implemented111")
     }
 }

@@ -1,9 +1,13 @@
 package model.service
 
-import model.Entity.User
 import logger.Logger
+import model.Entity.User
+import model.defineUserRole
+import model.defineUserStatus
+import model.encode
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import java.util.*
 
 
 @Component
@@ -15,6 +19,7 @@ class UserServiceImpl(
 
     override fun registerUser(user: User): Boolean {
         return if (!checkUser(user.login)) {
+            user.pass = encode(user.pass)
             dbConnector.save(user)
             true
         } else {
@@ -24,7 +29,30 @@ class UserServiceImpl(
     }
 
     override fun findUser(login: String): User? {
-        return null
+        val result = dbConnector.read(
+            table = dbConnector.getProperties().getProperty("usersTable"),
+            keyParams = "login",
+            valueParams = login
+        )
+        val user = mutableListOf<User>()
+        while (result.next()) {
+            user.add(
+                User
+                    (
+                    uid = result.getString("uid"),
+                    created = Date(result.getString("created")),
+                    role = defineUserRole(result.getString("role")),
+                    status = defineUserStatus(result.getString("status")),
+                    login = result.getString("login"),
+                    pass = result.getString("pass")
+                )
+            )
+        }
+        if (user.size != 1) {
+            logger.debug("User not found or too many found")
+            return null
+        }
+        return user[0]
     }
 
     override fun deleteUser(login: String): Boolean {
@@ -32,7 +60,26 @@ class UserServiceImpl(
     }
 
     override fun getAllUsers(): List<User> {
-        TODO("Not yet implemented")
+        val result = dbConnector.read(
+            table = dbConnector.getProperties().getProperty("usersTable"),
+            keyParams = "login",
+            valueParams = "*"
+        )
+        val users = mutableListOf<User>()
+        while (result.next()) {
+            users.add(
+                User
+                    (
+                    uid = result.getString("uid"),
+                    created = Date(result.getString("created")),
+                    role = defineUserRole(result.getString("role")),
+                    status = defineUserStatus(result.getString("status")),
+                    login = result.getString("login"),
+                    pass = result.getString("pass")
+                )
+            )
+        }
+        return users
     }
 
     private fun checkUser(userLogin: String): Boolean {

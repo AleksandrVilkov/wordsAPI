@@ -7,7 +7,7 @@ enum class GameStatus {
 }
 
 enum class UserRole {
-    ROLE_USER, ROLE_MODERATOR, ROLE_ADMIN
+    ROLE_USER, ROLE_MODERATOR, ROLE_ADMIN, NOT_DETERMINED
 }
 
 enum class UserStatus {

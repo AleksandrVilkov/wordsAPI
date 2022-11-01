@@ -17,3 +17,5 @@ class UserVO(
     val status: String,
     val login: String,
     ): EntityVO
+
+//TODO добавить объект сообщения и передавать их в случае ошибки

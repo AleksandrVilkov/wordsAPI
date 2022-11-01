@@ -2,6 +2,7 @@ package controller
 
 import controller.entityVO.Response
 import controller.entityVO.Status
+import logger.LoggerInterface
 import model.service.GameServiceInterface
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component

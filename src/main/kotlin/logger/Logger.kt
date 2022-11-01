@@ -1,25 +1,30 @@
 package logger
 
-import org.springframework.stereotype.Component
 import java.util.*
+import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Private
 
 //TODO  + сохранять в файл
 class Logger(
-    val className: String
-) {
-    fun info(msg: String) {
+    private var className: String,
+) : LoggerInterface {
+
+    override fun info(msg: String) {
         println("INFO: $className ${Date()} $msg")
     }
 
-    fun debug(msg: String) {
+    override fun debug(msg: String) {
         println("DEBUG: $className ${Date()} $msg")
     }
 
-    fun error(msg: String) {
+    override fun error(msg: String) {
         println("ERROR: $className ${Date()} $msg")
     }
 
-    fun warn(msg: String) {
+    override fun warn(msg: String) {
         println("$className ${Date()} $msg")
+    }
+
+    override fun setNameClass(name: String) {
+        this.className = name
     }
 }

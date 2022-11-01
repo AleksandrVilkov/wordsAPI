@@ -1,6 +1,7 @@
 package model.service
 
 import logger.Logger
+import logger.LoggerInterface
 import model.Entity.User
 import model.defineUserRole
 import model.defineUserStatus
@@ -13,9 +14,13 @@ import java.util.*
 @Component
 class UserServiceImpl(
     @Autowired
-    private val dbConnector: DataBaseConnector
+    private val dbConnector: DataBaseConnector,
+    @Autowired
+    private val logger: LoggerInterface
 ) : UserServiceInterface {
-    private val logger = Logger("UserServiceImpl")
+    init {
+        logger.setNameClass("UserServiceImpl")
+    }
 
     override fun registerUser(user: User): Boolean {
         return if (!checkUser(user.login)) {

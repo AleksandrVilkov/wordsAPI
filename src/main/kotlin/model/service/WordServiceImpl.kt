@@ -3,6 +3,7 @@ package model.service
 import model.Entity.Word
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import kotlin.random.Random
 
 
 @Component
@@ -23,13 +24,12 @@ class WordServiceImpl(
             )
         val wordList = mutableListOf<Word>()
         while (result.next()) {
-            wordList.add(Word(result.getString("wordValue"), result.getString("countletters")))
+            wordList.add(Word(result.getString("value"), result.getString("countletters")))
         }
         if (wordList.isEmpty()) {
             return null
         }
-        //TODO расчитывать рандомное значение
-        return wordList[1]
+        return wordList[Random.nextInt(0, wordList.size)]
     }
 
     override fun findWord(value: String): Word? {
@@ -43,6 +43,6 @@ class WordServiceImpl(
         if (wordList.isNotEmpty())
             return wordList.get(0)
 
-        return Word("", "")
+        return null
     }
 }

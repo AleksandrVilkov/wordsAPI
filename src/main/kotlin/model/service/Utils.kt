@@ -3,6 +3,7 @@ package model
 import model.Entity.UserRole
 import model.Entity.UserStatus
 import org.apache.commons.codec.binary.Base64
+import java.time.LocalDate
 
 
 fun decode(encodePass: String): String {
@@ -33,3 +34,7 @@ fun defineUserStatus(statusString: String): UserStatus {
 
     }
 }
+
+//fun convertStringToDate(string: String):LocalDate {
+//
+//}

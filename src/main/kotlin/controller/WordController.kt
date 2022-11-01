@@ -32,7 +32,7 @@ class WordController(
     fun checkWord(@PathVariable  desiredWord: String): Response {
         val word = wordService.findWord(desiredWord)
         return if (word == null) {
-            Response(Status.ERROR, "no such word exists")
+            Response(Status.ERROR, "no such word exists", WordVO(desiredWord))
         } else
             Response(Status.OK, "", WordVO(word.wordValue))
     }

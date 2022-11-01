@@ -16,7 +16,7 @@ class UserController(
     val userService: UserServiceInterface
 ) {
 
-    @PostMapping("/check/{login}")
+    @GetMapping("/check/{login}")
     fun checkUser(@PathVariable login: String): Response {
         val user = userService.findUser(login)
         return if (user != null) {

@@ -1,5 +1,6 @@
 package model.Entity
 
+import java.time.LocalDate
 import java.util.*
 
 enum class GameStatus {
@@ -22,7 +23,7 @@ interface Entity {
 
 class User(
     val uid: String = UUID.randomUUID().toString(),
-    val created: Date = Date(),
+    val created: LocalDate = LocalDate.now(),
     val role: UserRole = UserRole.ROLE_USER,
     val status: UserStatus = UserStatus.NOT_DETERMINED,
     val login: String,

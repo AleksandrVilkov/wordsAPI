@@ -1,13 +1,13 @@
 package model.service
 
 import logger.Logger
-import logger.LoggerInterface
 import model.Entity.User
 import model.defineUserRole
 import model.defineUserStatus
 import model.encode
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import java.time.LocalDate
 import java.util.*
 
 
@@ -15,12 +15,9 @@ import java.util.*
 class UserServiceImpl(
     @Autowired
     private val dbConnector: DataBaseConnector,
-    @Autowired
-    private val logger: LoggerInterface
 ) : UserServiceInterface {
-    init {
-        logger.setNameClass("UserServiceImpl")
-    }
+
+    val logger = Logger("UserServiceImpl")
 
     override fun registerUser(user: User): Boolean {
         return if (!checkUser(user.login)) {
@@ -37,7 +34,7 @@ class UserServiceImpl(
         val result = dbConnector.read(
             table = dbConnector.getProperties().getProperty("usersTable"),
             keyParams = "login",
-            valueParams = login
+            valueParams = "'$login'"
         )
         val user = mutableListOf<User>()
         while (result.next()) {
@@ -45,7 +42,7 @@ class UserServiceImpl(
                 User
                     (
                     uid = result.getString("uid"),
-                    created = Date(result.getString("created")),
+                    created = LocalDate.parse(result.getString("created")),
                     role = defineUserRole(result.getString("role")),
                     status = defineUserStatus(result.getString("status")),
                     login = result.getString("login"),
@@ -76,7 +73,7 @@ class UserServiceImpl(
                 User
                     (
                     uid = result.getString("uid"),
-                    created = Date(result.getString("created")),
+                    created = LocalDate.parse(result.getString("created")),
                     role = defineUserRole(result.getString("role")),
                     status = defineUserStatus(result.getString("status")),
                     login = result.getString("login"),

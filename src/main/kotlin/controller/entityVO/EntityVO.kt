@@ -1,9 +1,5 @@
 package controller.entityVO
 
-import model.Entity.UserRole
-import model.Entity.UserStatus
-import java.util.*
-
 enum class Status {
     OK, ERROR
 }
@@ -16,6 +12,12 @@ class UserVO(
     val role: String,
     val status: String,
     val login: String,
-    ): EntityVO
+) : EntityVO
 
-//TODO добавить объект сообщения и передавать их в случае ошибки
+class GameVO(
+    val uid: String,
+    val created: String,
+    val userUid: String,
+    val status: String,
+    val hiddenWord: String
+) : EntityVO

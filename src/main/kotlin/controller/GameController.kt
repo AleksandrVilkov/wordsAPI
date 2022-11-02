@@ -1,5 +1,6 @@
 package controller
 
+import controller.entityVO.GameVO
 import controller.entityVO.Response
 import controller.entityVO.Status
 import model.Entity.Game
@@ -30,9 +31,25 @@ class GameController(
             countLettersInHiddenWord = countLettersInWord
         )
         val msgs = mutableListOf<Message>()
-        gameService.createGame(game, msgs)
-        //TODO  сообщения
-        return Response(Status.ERROR, "Not implemented")
+        val result = gameService.createGame(game, msgs)
+        if (result != null || msgs.isEmpty()) {
+            return Response(Status.OK, "", result?.let {
+                val gameVO = GameVO(
+                    uid = it.uid,
+                    created = result.created.toString(),
+                    userUid = result.userUid,
+                    status = result.status.name,
+                    hiddenWord = result.hiddenWord
+                )
+                gameVO
+            })
+        }
+        return Response(Status.ERROR, getDescription(msgs))
+    }
+
+    @PostMapping("/check")
+    fun tryCheck() {
+        //TODO
     }
 
     @PostMapping("/defeat/save")

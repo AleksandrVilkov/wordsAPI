@@ -17,7 +17,7 @@ class GameServiceImpl(
 ) : GameServiceInterface {
     val logger = Logger("GameServiceImpl")
 
-    override fun createGame(game: Game, msgs: MutableList<Message>): Boolean {
+    override fun createGame(game: Game, msgs: MutableList<Message>): Game? {
         val word = wordService.findRandomWord(game.countLettersInHiddenWord, msgs)
         game.hiddenWord = word?.wordValue.toString()
         if (game.hiddenWord.isEmpty()) {
@@ -28,7 +28,14 @@ class GameServiceImpl(
             logger.debug(messageTest)
             game.status = GameStatus.ERROR
         }
-        return dbConnector.save(game)
+        return if (dbConnector.save(game)) {
+            game
+        } else {
+            val text = "Не удалось создать игру для полльзователя  ${game.userUid}"
+            msgs.add(Message(text, ""))
+            logger.debug(text)
+            null
+        }
     }
 
     override fun readUserGames(userUid: String, msgs: MutableList<Message>): List<Game> {

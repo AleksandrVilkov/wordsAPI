@@ -1,5 +1,7 @@
 package model.service
 
+import controller.GameServiceInterface
+import controller.WordServiceInterface
 import logger.Logger
 import model.Entity.Game
 import model.Entity.GameStatus

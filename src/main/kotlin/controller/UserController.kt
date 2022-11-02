@@ -7,7 +7,6 @@ import model.Entity.Message
 import model.Entity.User
 import model.Entity.UserRole
 import model.Entity.UserStatus
-import model.service.UserServiceInterface
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.*

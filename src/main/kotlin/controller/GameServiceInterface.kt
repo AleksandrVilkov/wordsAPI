@@ -1,4 +1,4 @@
-package model.service
+package controller
 
 import model.Entity.Game
 import model.Entity.Message

@@ -4,7 +4,6 @@ import controller.entityVO.Response
 import controller.entityVO.Status
 import controller.entityVO.WordVO
 import model.Entity.Message
-import model.service.WordServiceInterface
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.*

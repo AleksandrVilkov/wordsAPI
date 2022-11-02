@@ -1,5 +1,6 @@
 package model.service
 
+import controller.UserServiceInterface
 import logger.Logger
 import model.Entity.Message
 import model.Entity.User

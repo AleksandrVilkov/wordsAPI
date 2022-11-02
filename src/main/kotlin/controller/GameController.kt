@@ -5,7 +5,6 @@ import controller.entityVO.Status
 import model.Entity.Game
 import model.Entity.GameStatus
 import model.Entity.Message
-import model.service.GameServiceInterface
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.*

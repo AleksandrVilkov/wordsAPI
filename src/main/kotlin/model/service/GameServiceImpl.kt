@@ -2,8 +2,9 @@ package model.service
 
 import model.Entity.Game
 import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 
-@Component
+@Service
 class GameServiceImpl:GameServiceInterface {
     override fun createGame(game: Game): Boolean {
         TODO("Not yet implemented")

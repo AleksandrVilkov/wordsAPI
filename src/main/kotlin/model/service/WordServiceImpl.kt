@@ -2,11 +2,11 @@ package model.service
 
 import model.Entity.Word
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import kotlin.random.Random
 
 
-@Component
+@Service
 class WordServiceImpl(
     @Autowired
     private val connector: DataBaseConnector

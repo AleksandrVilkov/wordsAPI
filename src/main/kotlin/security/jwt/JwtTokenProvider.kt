@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
 import java.util.*
 import javax.annotation.PostConstruct
+import javax.servlet.http.HttpServletRequest
 
 
 @Component
@@ -52,6 +53,13 @@ class JwtTokenProvider(
     fun getAuthentication(token: String): Authentication {
         val userDatails = userDetailsService.loadUserByUsername(getUserName(token))
         return UsernamePasswordAuthenticationToken(userDatails, "", userDatails.authorities)
+    }
+    fun resolveToken(req: HttpServletRequest): String? {
+        val bearerToken = req.getHeader("Authorization")
+        if(bearerToken != null && bearerToken.startsWith("Bearer_"))
+            return bearerToken.substring(7, bearerToken.length)
+
+        return null
     }
 
     fun getUserName(token: String): String {

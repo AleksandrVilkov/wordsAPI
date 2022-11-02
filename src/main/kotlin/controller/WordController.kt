@@ -3,7 +3,7 @@ package controller
 import controller.entityVO.Response
 import controller.entityVO.Status
 import controller.entityVO.WordVO
-import model.service.WordServiceImpl
+import model.Entity.Message
 import model.service.WordServiceInterface
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -18,19 +18,23 @@ class WordController(
 ) {
     @GetMapping("/random")
     fun getRandomWord(@RequestParam countLetters: Int): Response {
-        return if (checkCount(countLetters)) {
-            val word = wordService.findRandomWord(countLetters)
+        val msgs = mutableListOf<Message>()
+        val correctCountLetters = checkCount(countLetters)
+        val word = wordService.findRandomWord(countLetters, msgs)
+        if (msgs.isEmpty() && correctCountLetters) {
             Response(Status.OK, "", word?.let { WordVO(it.wordValue) })
-        } else
-            Response(Status.ERROR, "The number of letters must be between 3 and 6")
+        }
+        return Response(Status.ERROR, getDescription(msgs))
     }
 
     @GetMapping("/check")
-    fun checkWord(@RequestParam  desiredWord: String): Response {
-        val word = wordService.findWord(desiredWord)
-        return if (word == null) {
-            Response(Status.ERROR, "no such word exists", WordVO(desiredWord))
-        } else
+    fun checkWord(@RequestParam desiredWord: String): Response {
+        val msgs = mutableListOf<Message>()
+        val word = wordService.findWord(desiredWord, msgs)
+        return if (word != null && msgs.isEmpty()) {
             Response(Status.OK, "", WordVO(word.wordValue))
+        } else {
+            Response(Status.ERROR, getDescription(msgs), WordVO(desiredWord))
+        }
     }
 }

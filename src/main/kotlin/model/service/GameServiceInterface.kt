@@ -4,7 +4,7 @@ import model.Entity.Game
 import model.Entity.Message
 
 interface GameServiceInterface {
-    fun createGame(game: Game, message: List<Message>): Boolean
-    fun readUserGames(userUid: String, message: List<Message>): List<Game>
-    fun updateGames(gameUid: String, message: List<Message>): Boolean
+    fun createGame(game: Game, msgs: MutableList<Message>): Boolean
+    fun readUserGames(userUid: String, msgs: MutableList<Message>): List<Game>
+    fun updateGames(gameUid: String, msgs: MutableList<Message>): Boolean
 }

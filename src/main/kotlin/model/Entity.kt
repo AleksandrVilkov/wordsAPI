@@ -46,14 +46,16 @@ data class Message(
     val textMessage: String,
     val description: String
 )
-class Game(
+
+data class Game(
     val uid: String = UUID.randomUUID().toString(),
     val created: Date = Date(),
     val userUid: String,
-    var updated: Date,
-    val status: GameStatus,
+    var updated: Date = Date(),
+    var status: GameStatus,
     var time: String = "",
     var hiddenWord: String = "",
+    var countLettersInHiddenWord: Int,
     val countAttempts: Int = 0
 ) : Entity {
     override fun getTable(): String {

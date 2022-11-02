@@ -16,6 +16,7 @@ class ConnectorProxy(
 ) : DataBaseConnector {
     val logger = Logger("PSQLConnector")
 
+    //  TODO  предусмотреть исклюючения, помещать их в сообщения
     override fun save(data: Entity):Boolean {
         val sqlQuery = "INSERT INTO ${data.getTable()}${data.getColumns()} VALUES ${data.getValues()};"
         logger.debug("sending query $sqlQuery to PSQL")

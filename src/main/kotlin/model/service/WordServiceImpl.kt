@@ -28,7 +28,7 @@ class WordServiceImpl(
             )
         val wordList = mutableListOf<Word>()
         while (result.next()) {
-            wordList.add(Word(result.getString("value"), result.getString("countletters")))
+            wordList.add(Word(result.getString("uid"), result.getString("value"), result.getString("countletters")))
         }
         if (wordList.isEmpty()) {
             val msgText = "Получен пустой список слов"
@@ -47,7 +47,7 @@ class WordServiceImpl(
 
         val wordList = mutableListOf<Word>()
         while (result.next()) {
-            wordList.add(Word(result.getString("value"), result.getString("countletters")))
+            wordList.add(Word(result.getString("uid"), result.getString("value"), result.getString("countletters")))
         }
         if (wordList.size != 1) {
             val messageText = "Найдено некоректное количество слов -  ${wordList.size}.  Ожидалось 1.  " +

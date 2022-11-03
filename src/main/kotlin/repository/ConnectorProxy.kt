@@ -16,7 +16,6 @@ class ConnectorProxy(
 ) : DataBaseConnector {
     val logger = Logger("PSQLConnector")
 
-    //  TODO  предусмотреть исклюючения, помещать их в сообщения
     override fun save(data: Entity):Boolean {
         val sqlQuery = "INSERT INTO ${data.getTable()}${data.getColumns()} VALUES ${data.getValues()};"
         logger.debug("sending query $sqlQuery to PSQL")
@@ -34,7 +33,9 @@ class ConnectorProxy(
     }
 
     override fun delete(data: Entity): Boolean {
-        TODO("Not yet implemented")
+        val sqlQuery = "DELETE FROM ${data.getTable()} WHERE uid = ${data.uid}}"
+        logger.debug("sending query $sqlQuery to PSQL")
+        return connector.sendQueryWithoutResult(sqlQuery)
     }
 
     override fun getProperties(): Properties {

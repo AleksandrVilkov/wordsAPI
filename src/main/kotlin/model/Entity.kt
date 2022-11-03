@@ -16,13 +16,14 @@ enum class UserStatus {
 }
 
 interface Entity {
+    val uid: String
     fun getTable(): String
     fun getColumns(): String
     fun getValues(): String
 }
 
 class User(
-    val uid: String = UUID.randomUUID().toString(),
+    override val uid: String = UUID.randomUUID().toString(),
     val created: LocalDate = LocalDate.now(),
     val role: UserRole = UserRole.ROLE_USER,
     val status: UserStatus = UserStatus.NOT_DETERMINED,
@@ -48,7 +49,7 @@ data class Message(
 )
 
 data class Game(
-    val uid: String = UUID.randomUUID().toString(),
+    override val uid: String = UUID.randomUUID().toString(),
     val created: Date = Date(),
     val userUid: String,
     var updated: Date = Date(),
@@ -73,6 +74,7 @@ data class Game(
 }
 
 data class Word(
+    override val uid: String = UUID.randomUUID().toString(),
     val wordValue: String,
     val countLetters: String,
 ) : Entity {

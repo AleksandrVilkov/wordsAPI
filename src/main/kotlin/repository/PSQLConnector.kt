@@ -33,13 +33,15 @@ class PSQLConnector {
         return query.executeQuery()
     }
 
-    fun sendQueryWithoutResult(sqlQuery: String) {
+    fun sendQueryWithoutResult(sqlQuery: String):Boolean {
         val query = getConnector().prepareStatement(sqlQuery)
         try {
             logger.debug(sqlQuery)
             query.executeQuery()
+            return true
         } catch (e: PSQLException) {
             e.message?.let { logger.warn(it) }
+            return false
         }
     }
     fun getProperties(): Properties {

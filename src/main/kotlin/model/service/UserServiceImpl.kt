@@ -1,6 +1,8 @@
 package model.service
 
+import controller.UserServiceInterface
 import logger.Logger
+import model.Entity.Message
 import model.Entity.User
 import model.defineUserRole
 import model.defineUserStatus
@@ -9,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import java.time.LocalDate
-import java.util.*
 
 
 @Service
@@ -20,18 +21,20 @@ class UserServiceImpl(
 
     val logger = Logger("UserServiceImpl")
 
-    override fun registerUser(user: User): Boolean {
-        return if (!checkUser(user.login)) {
+    override fun registerUser(user: User, msgs: MutableList<Message>): Boolean {
+        return if (!checkUser(user.login, msgs)) {
             user.pass = encode(user.pass)
             dbConnector.save(user)
             true
         } else {
-            logger.debug("Пользователь не создан, так как уже существует")
+            val msgTest = "Пользователь не создан, так как уже существует"
+            msgs.add(Message(msgTest, ""))
+            logger.debug(msgTest)
             false
         }
     }
 
-    override fun findUser(login: String): User? {
+    override fun findUser(login: String, msgs: MutableList<Message>): User? {
         val result = dbConnector.read(
             table = dbConnector.getProperties().getProperty("usersTable"),
             keyParams = "login",
@@ -52,17 +55,19 @@ class UserServiceImpl(
             )
         }
         if (user.size != 1) {
-            logger.debug("User not found or too many found")
+            val msgText = "User not found or too many found"
+            msgs.add(Message(msgText, "count found users: ${user.size}"))
+            logger.debug(msgText)
             return null
         }
         return user[0]
     }
 
-    override fun deleteUser(login: String): Boolean {
+    override fun deleteUser(login: String, msgs: MutableList<Message>): Boolean {
         TODO("Not yet implemented")
     }
 
-    override fun getAllUsers(): List<User> {
+    override fun getAllUsers(msgs: MutableList<Message>): List<User> {
         val result = dbConnector.read(
             table = dbConnector.getProperties().getProperty("usersTable"),
             keyParams = "login",
@@ -85,7 +90,7 @@ class UserServiceImpl(
         return users
     }
 
-    private fun checkUser(userLogin: String): Boolean {
-        return findUser(userLogin) != null
+    private fun checkUser(userLogin: String, msgs: MutableList<Message>): Boolean {
+        return findUser(userLogin, msgs) != null
     }
 }

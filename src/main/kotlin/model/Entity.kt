@@ -42,19 +42,26 @@ class User(
     }
 }
 
+data class Message(
+    val textMessage: String,
+    val description: String
+)
+
 data class Game(
     val uid: String = UUID.randomUUID().toString(),
     val created: Date = Date(),
     val userUid: String,
-    val updated: Date,
-    val status: GameStatus,
-    val time: String,
-    val hiddenWord: String,
-    val countAttempts: Int
+    var updated: Date = Date(),
+    var status: GameStatus,
+    var time: String = "",
+    var hiddenWord: String = "",
+    var countLettersInHiddenWord: Int,
+    val countAttempts: Int = 0
 ) : Entity {
     override fun getTable(): String {
         return "games"
     }
+
 
     override fun getColumns(): String {
         return "(uid, created, userUID, updated, status, time, hiddenWord, countAttempts)"

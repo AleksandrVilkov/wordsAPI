@@ -10,6 +10,7 @@ import model.Entity.Message
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDate
 
 @Component
 @RestController
@@ -28,12 +29,18 @@ class GameController(
 
     @GetMapping("/start")
     fun startGame(@RequestParam userUid: String, @RequestParam countLettersInWord: Int): Response {
+        val msgs = mutableListOf<Message>()
+        val userGames = gameService.readUserGames(userUid, msgs)
+        if (!canStartGame(userGames, msgs)) {
+            return Response(Status.ERROR, getDescription(msgs))
+        }
         val game = Game(
             userUid = userUid,
             status = GameStatus.IN_GAME,
-            countLettersInHiddenWord = countLettersInWord
+            countLettersInHiddenWord = countLettersInWord,
+            created = LocalDate.now()
         )
-        val msgs = mutableListOf<Message>()
+        //TODO проверять наличие игры у пользователя
         val result = gameService.createGame(game, msgs)
         if (result != null || msgs.isEmpty()) {
             return Response(Status.OK, "", result?.let {
@@ -53,7 +60,7 @@ class GameController(
     @GetMapping("/check")
     fun tryCheck(@RequestParam word: String): Response {
         val msg = mutableListOf<Message>()
-        val  foundWord = wordService.findWord(value = word, msg)
+        val foundWord = wordService.findWord(value = word, msg)
             ?: return Response(Status.ERROR, "Слово не найдено!", WordVO(value = ""))
 
         return Response(Status.OK, "", WordVO(value = foundWord.wordValue))

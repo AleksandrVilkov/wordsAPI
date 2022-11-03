@@ -2,12 +2,14 @@ package model.service
 
 import controller.GameServiceInterface
 import controller.WordServiceInterface
+import jdk.jshell.Snippet
 import logger.Logger
 import model.Entity.Game
 import model.Entity.GameStatus
 import model.Entity.Message
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import java.time.LocalDate
 
 @Component
 class GameServiceImpl(
@@ -39,10 +41,37 @@ class GameServiceImpl(
     }
 
     override fun readUserGames(userUid: String, msgs: MutableList<Message>): List<Game> {
-        TODO("Not yet implemented")
+        val result = dbConnector.read(dbConnector.getProperties().getProperty("gamesTable"), "useruid", "'$userUid'")
+        val games = mutableListOf<Game>()
+        while (result.next()) {
+            games.add(
+                Game(
+                    created = LocalDate.parse(result.getString("created")),
+                    userUid = result.getString("useruid"),
+                    updated = LocalDate.parse(result.getString("updated")),
+                    status = defineGameStatus(result.getString("status")),
+                    time = result.getString("time"),
+                    hiddenWord = result.getString("hiddenWord"),
+                    countLettersInHiddenWord = result.getString("hiddenWord").length,
+                    countAttempts = result.getInt("countAttempts")
+                )
+            )
+        }
+        return games
     }
 
     override fun updateGames(gameUid: String, msgs: MutableList<Message>): Boolean {
         TODO("Not yet implemented")
+    }
+
+
+    private fun defineGameStatus(statusString: String): GameStatus {
+        return when (statusString) {
+            GameStatus.IN_GAME.name -> GameStatus.IN_GAME
+            GameStatus.NOT_IN_GAME.name -> GameStatus.NOT_IN_GAME
+            GameStatus.ERROR.name -> GameStatus.ERROR
+            GameStatus.FINISHED.name -> GameStatus.FINISHED
+            else -> GameStatus.NOT_DETERMINED
+        }
     }
 }

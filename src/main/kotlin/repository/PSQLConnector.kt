@@ -13,7 +13,7 @@ import java.util.*
 class PSQLConnector {
 
     private final val props: Properties
-    private val filePath = "src/main/resources/psql.properties"
+    private val filePath = "src/main/resources/application.properties"
     private lateinit var connection: Connection
     val logger = Logger("PSQLConnector")
 
@@ -33,17 +33,27 @@ class PSQLConnector {
         return query.executeQuery()
     }
 
-    fun sendQueryWithoutResult(sqlQuery: String):Boolean {
+    fun sendQueryWithoutResult(sqlQuery: String): Boolean {
         val query = getConnector().prepareStatement(sqlQuery)
         try {
             logger.debug(sqlQuery)
             query.executeQuery()
             return true
         } catch (e: PSQLException) {
-            e.message?.let { logger.warn(it) }
+            e.message?.let {
+                if (it.contains("Запрос не вернул результатов")) {
+                    return true
+                } else {
+                    logger.warn(it)
+                    return false
+                }
+            }
+
+
             return false
         }
     }
+
     fun getProperties(): Properties {
         return props
     }

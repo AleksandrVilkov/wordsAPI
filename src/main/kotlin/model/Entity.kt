@@ -1,10 +1,11 @@
 package model.Entity
 
+import org.springframework.beans.factory.annotation.Value
 import java.time.LocalDate
 import java.util.*
 
 enum class GameStatus {
-    IN_GAME, FINISHED, ERROR, NOT_IN_GAME
+    IN_GAME, FINISHED, ERROR, NOT_IN_GAME, NOT_DETERMINED
 }
 
 enum class UserRole {
@@ -22,6 +23,7 @@ interface Entity {
     fun getValues(): String
 }
 
+//TODO возвращать названия таблиц из пропсов
 class User(
     override val uid: String = UUID.randomUUID().toString(),
     val created: LocalDate = LocalDate.now(),
@@ -50,9 +52,9 @@ data class Message(
 
 data class Game(
     override val uid: String = UUID.randomUUID().toString(),
-    val created: Date = Date(),
+    val created: LocalDate,
     val userUid: String,
-    var updated: Date = Date(),
+    var updated: LocalDate = LocalDate.now(),
     var status: GameStatus,
     var time: String = "",
     var hiddenWord: String = "",
@@ -65,7 +67,7 @@ data class Game(
 
 
     override fun getColumns(): String {
-        return "(uid, created, userUID, updated, status, time, hiddenWord, countAttempts)"
+        return "(uid, created, useruid, updated, status, time, hiddenWord, countAttempts)"
     }
 
     override fun getValues(): String {

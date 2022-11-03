@@ -1,13 +1,15 @@
 package logger
 
+import java.io.BufferedWriter
 import java.io.File
+import java.io.FileWriter
 import java.io.PrintWriter
 import java.util.*
 
 class Logger(
     private var className: String,
 ) {
-  //  val filePath = "/temp/logs/log.log"
+    val filePath = "temp/logs/log.log"
     fun info(msg: String) {
         showAndSaveLogs("INFO: $className ${Date()} $msg")
     }
@@ -25,9 +27,10 @@ class Logger(
     }
 
     private fun showAndSaveLogs(msg: String) {
-//        val file = File(filePath)
-//        val writer = PrintWriter(file)
-//        writer.use { it.append("$msg\n") }
+        val fileWriter = FileWriter(filePath, true)
+        val bufferWriter = BufferedWriter(fileWriter)
+        bufferWriter.write("$msg\n")
+        bufferWriter.close()
         println(msg)
     }
 }

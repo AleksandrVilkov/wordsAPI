@@ -9,10 +9,11 @@ import model.defineUserStatus
 import model.encode
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import java.time.LocalDate
 
 
-@Component
+@Service
 class UserServiceImpl(
     @Autowired
     private val dbConnector: DataBaseConnector,

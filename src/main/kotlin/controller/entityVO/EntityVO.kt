@@ -6,7 +6,14 @@ enum class Status {
 
 interface EntityVO {
 }
+
 class WordVO(val value: String) : EntityVO
+
+class AuthRequest(
+    val login: String,
+    val pass: String
+)
+
 class UserVO(
     val created: String,
     val role: String,

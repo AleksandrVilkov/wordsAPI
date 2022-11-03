@@ -53,19 +53,20 @@ class JwtTokenProvider(
     }
 
     fun getAuthentication(token: String): Authentication {
-        val userDatails = userDetailsService.loadUserByUsername(getUserName(token))
-        return UsernamePasswordAuthenticationToken(userDatails, "", userDatails.authorities)
+        val userDetails = userDetailsService.loadUserByUsername(getUserName(token))
+        return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
     }
     fun resolveToken(req: HttpServletRequest): String? {
         val bearerToken = req.getHeader("Authorization")
-        if(bearerToken != null && bearerToken.startsWith("Bearer_"))
+        if(bearerToken != null)
             return bearerToken.substring(7, bearerToken.length)
 
         return null
     }
 
     fun getUserName(token: String): String {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).body.subject;
+        return Jwts.parser().setSigningKey(secret)
+            .parseClaimsJws(token).body.subject.split(",")[0].split("sub=")[1]
     }
 
     fun validateToken(token: String): Boolean {

@@ -3,6 +3,7 @@ package controller
 import controller.entityVO.GameVO
 import controller.entityVO.Response
 import controller.entityVO.Status
+import controller.entityVO.WordVO
 import model.Entity.Game
 import model.Entity.GameStatus
 import model.Entity.Message
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/v1/game")
 class GameController(
     @Autowired
-    val gameService: GameServiceInterface
+    val gameService: GameServiceInterface,
+    @Autowired
+    val wordService: WordServiceInterface
 ) {
 
     @PostMapping("/win/save")
@@ -47,9 +50,13 @@ class GameController(
         return Response(Status.ERROR, getDescription(msgs))
     }
 
-    @PostMapping("/check")
-    fun tryCheck() {
-        //TODO
+    @GetMapping("/check")
+    fun tryCheck(@RequestParam word: String): Response {
+        val msg = mutableListOf<Message>()
+        val  foundWord = wordService.findWord(value = word, msg)
+            ?: return Response(Status.ERROR, "Слово не найдено!", WordVO(value = ""))
+
+        return Response(Status.OK, "", WordVO(value = foundWord.wordValue))
     }
 
     @PostMapping("/defeat/save")

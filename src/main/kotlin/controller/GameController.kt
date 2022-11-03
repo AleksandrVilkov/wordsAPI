@@ -61,16 +61,19 @@ class GameController(
 
     @PostMapping("/defeat/save")
     fun saveDefeat(): Response {
+        //  TODO
         return Response(Status.ERROR, "Not implemented")
     }
 
     @GetMapping("/history")
     fun getAllHistory(): Response {
+        //  TODO
         return Response(Status.ERROR, "Not implemented")
     }
 
     @GetMapping("/records")
     fun getRecords(): Response {
+        //  TODO
         return Response(Status.ERROR, "Not implemented")
     }
 }

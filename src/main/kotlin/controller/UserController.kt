@@ -47,7 +47,7 @@ class UserController(
             User(
                 login = login,
                 pass = pass,
-                role = UserRole.ROLE_USER,
+                role = UserRole.USER,
                 status = UserStatus.ACTIVE,
                 created = LocalDate.now()
             ), msgs

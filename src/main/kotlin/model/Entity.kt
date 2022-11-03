@@ -8,7 +8,7 @@ enum class GameStatus {
 }
 
 enum class UserRole {
-    ROLE_USER, ROLE_MODERATOR, ROLE_ADMIN, NOT_DETERMINED
+    USER, MODERATOR, ADMIN, NOT_DETERMINED
 }
 
 enum class UserStatus {
@@ -25,7 +25,7 @@ interface Entity {
 class User(
     override val uid: String = UUID.randomUUID().toString(),
     val created: LocalDate = LocalDate.now(),
-    val role: UserRole = UserRole.ROLE_USER,
+    val role: UserRole = UserRole.USER,
     val status: UserStatus = UserStatus.NOT_DETERMINED,
     val login: String,
     var pass: String
@@ -69,7 +69,7 @@ data class Game(
     }
 
     override fun getValues(): String {
-        return "($uid, $created, $userUid, $updated, ${status.name}, $time, $hiddenWord, $countAttempts)"
+        return "('$uid', '$created', '$userUid', '$updated', '${status.name}', '$time', '$hiddenWord', '$countAttempts')"
     }
 }
 

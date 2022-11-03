@@ -3,24 +3,20 @@ package model
 import model.Entity.UserRole
 import model.Entity.UserStatus
 import org.apache.commons.codec.binary.Base64
+import org.springframework.security.crypto.bcrypt.BCrypt
 import java.time.LocalDate
 
 
-fun decode(encodePass: String): String {
-    val base64 = Base64()
-    return String(base64.decode(encodePass.toByteArray()), Charsets.UTF_8)
-}
-
 fun encode(pass: String): String {
     val base64 = Base64()
-    return String(base64.encode(pass.toByteArray()), Charsets.UTF_8)
+    return BCrypt.hashpw(pass,BCrypt.gensalt())
 }
 
 fun defineUserRole(roleString: String): UserRole {
     return when (roleString) {
-        UserRole.ROLE_USER.name -> UserRole.ROLE_USER
-        UserRole.ROLE_ADMIN.name -> UserRole.ROLE_ADMIN
-        UserRole.ROLE_MODERATOR.name -> UserRole.ROLE_MODERATOR
+        UserRole.USER.name -> UserRole.USER
+        UserRole.ADMIN.name -> UserRole.ADMIN
+        UserRole.MODERATOR.name -> UserRole.MODERATOR
         else -> UserRole.NOT_DETERMINED
     }
 }

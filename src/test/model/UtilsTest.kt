@@ -8,6 +8,5 @@ class UtilsTest {
         val test = "test"
         val encode = encode(test)
         println("encode \"$test\" ---->  $encode")
-        println("decode $encode ----->  ${decode(encode)}")
     }
 }

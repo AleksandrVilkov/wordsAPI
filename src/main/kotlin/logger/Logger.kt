@@ -1,27 +1,33 @@
 package logger
 
-import org.springframework.stereotype.Component
+import java.io.File
+import java.io.PrintWriter
 import java.util.*
-import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Private
 
-//TODO  + сохранять в файл
 class Logger(
     private var className: String,
 ) {
-
+    val filePath = "/temp/logs/log.log"
     fun info(msg: String) {
-        println("INFO: $className ${Date()} $msg")
+        showAndSaveLogs("INFO: $className ${Date()} $msg")
     }
 
     fun debug(msg: String) {
-        println("DEBUG: $className ${Date()} $msg")
+        showAndSaveLogs("DEBUG: $className ${Date()} $msg")
     }
 
     fun error(msg: String) {
-        println("ERROR: $className ${Date()} $msg")
+        showAndSaveLogs("ERROR: $className ${Date()} $msg")
     }
 
     fun warn(msg: String) {
-        println("$className ${Date()} $msg")
+        showAndSaveLogs("WARN!: $className ${Date()} $msg")
+    }
+
+    private fun showAndSaveLogs(msg: String) {
+        val file = File(filePath)
+        val writer = PrintWriter(file)
+        writer.use { it.append("$msg\n") }
+        println(msg)
     }
 }

@@ -7,7 +7,7 @@ import java.util.*
 class Logger(
     private var className: String,
 ) {
-    val filePath = "/temp/logs/log.log"
+  //  val filePath = "/temp/logs/log.log"
     fun info(msg: String) {
         showAndSaveLogs("INFO: $className ${Date()} $msg")
     }
@@ -25,9 +25,9 @@ class Logger(
     }
 
     private fun showAndSaveLogs(msg: String) {
-        val file = File(filePath)
-        val writer = PrintWriter(file)
-        writer.use { it.append("$msg\n") }
+//        val file = File(filePath)
+//        val writer = PrintWriter(file)
+//        writer.use { it.append("$msg\n") }
         println(msg)
     }
 }

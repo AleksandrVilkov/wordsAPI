@@ -34,7 +34,9 @@ class JwtTokenProvider(
 
     @PostConstruct
     fun init() {
-        secret = Base64.getEncoder().encodeToString(secret.toByteArray())
+        val byteSecret = (secret.toByteArray())
+        println(byteSecret.size)
+        secret = Base64.getEncoder().encodeToString(byteSecret)
     }
 
     fun createToken(userName: String, roles: MutableCollection<UserRole>): String {

@@ -25,8 +25,9 @@ class JwtUserDetailsService(
             throw UsernameNotFoundException(getDescription(msgs))
         }
         val jwtUser = jwtUserFactory(user)
+        logger.debug("user with login ${jwtUser.login} successfully loaded")
+        return jwtUser
 
-        logger.debug("user with login $username successfully loaded")
-        TODO()
+
     }
 }

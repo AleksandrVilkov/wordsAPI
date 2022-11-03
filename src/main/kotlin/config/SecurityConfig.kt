@@ -34,7 +34,7 @@ class SecurityConfig(
             .and()
             .authorizeRequests()
             .antMatchers(loginEndpoint).permitAll()
-            .antMatchers(adminEndpoint).hasRole("ROLE_ADMIN")
+            .antMatchers(adminEndpoint).permitAll()
             .anyRequest().authenticated()
             .and()
             .apply(JwtConfigure(jwtTokenProvider))

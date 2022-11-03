@@ -10,35 +10,35 @@ class JWTUser(
     val role: MutableCollection<out GrantedAuthority>,
     val enabled: Boolean,
     val login: String,
-    val pass: String
+    val pass: String,
+    val userAuthorities: MutableCollection<out GrantedAuthority>
     // val lastPasswordResetDate: LocalDate,
-
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        TODO("Not yet implemented")
+        return userAuthorities
     }
 
     override fun getPassword(): String {
-        TODO("Not yet implemented")
+        return pass
     }
 
     override fun getUsername(): String {
-        TODO("Not yet implemented")
+        return login
     }
 
     override fun isAccountNonExpired(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun isAccountNonLocked(): Boolean {
-        TODO("Not yet implemented")
+        return enabled
     }
 
     override fun isCredentialsNonExpired(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun isEnabled(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 }

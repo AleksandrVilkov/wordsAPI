@@ -4,6 +4,7 @@ import controller.UserServiceInterface
 import logger.Logger
 import model.Entity.Message
 import model.Entity.User
+import model.decode
 import model.defineUserRole
 import model.defineUserStatus
 import model.encode

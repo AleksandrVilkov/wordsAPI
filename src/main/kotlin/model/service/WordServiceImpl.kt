@@ -16,7 +16,8 @@ class WordServiceImpl(
 ) : WordServiceInterface {
     val logger = Logger("WordServiceImpl")
     override fun createWord(word: Word, msgs: MutableList<Message>) {
-//TODO
+        if (!connector.save(word))
+            msgs.add(Message("Не удалось сохранить слово ${word.wordValue} в базу данных", ""))
     }
 
     override fun findRandomWord(countLetters: Int, msgs: MutableList<Message>): Word? {
@@ -32,7 +33,7 @@ class WordServiceImpl(
         }
         if (wordList.isEmpty()) {
             val msgText = "Получен пустой список слов"
-            msgs.add(Message(msgText,  ""))
+            msgs.add(Message(msgText, ""))
             logger.debug(msgText)
             return null
         }
@@ -41,9 +42,11 @@ class WordServiceImpl(
 
     override fun findWord(value: String, msgs: MutableList<Message>): Word? {
         val result =
-            connector.read(connector.getProperties().getProperty("wordsTable"),
+            connector.read(
+                connector.getProperties().getProperty("wordsTable"),
                 "value",
-                "'${value.lowercase()}'")
+                "'${value.lowercase()}'"
+            )
 
         val wordList = mutableListOf<Word>()
         while (result.next()) {

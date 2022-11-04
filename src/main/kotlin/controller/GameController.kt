@@ -40,7 +40,6 @@ class GameController(
             countLettersInHiddenWord = countLettersInWord,
             created = LocalDate.now()
         )
-        //TODO проверять наличие игры у пользователя
         val result = gameService.createGame(game, msgs)
         if (result != null || msgs.isEmpty()) {
             return Response(Status.OK, "", result?.let {
@@ -73,9 +72,25 @@ class GameController(
     }
 
     @GetMapping("/history")
-    fun getAllHistory(): Response {
-        //  TODO
-        return Response(Status.ERROR, "Not implemented")
+    fun getAllHistory(@RequestParam userUid: String): Response {
+        val msgs = mutableListOf<Message>()
+        val userGames = gameService.readUserGames(userUid, msgs)
+        if (msgs.isNotEmpty()) {
+            return Response(Status.ERROR, getDescription(msgs))
+        }
+        val result = mutableListOf<GameVO>()
+        for (userGame in userGames) {
+            result.add(
+                GameVO(
+                    uid = userGame.uid,
+                    created = userGame.created.toString(),
+                    userUid = userGame.userUid,
+                    status = userGame.status.name,
+                    hiddenWord = userGame.hiddenWord
+                )
+            )
+        }
+        TODO()
     }
 
     @GetMapping("/records")

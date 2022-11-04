@@ -63,7 +63,12 @@ class UserServiceImpl(
     }
 
     override fun deleteUser(login: String, msgs: MutableList<Message>): Boolean {
-        TODO("Not yet implemented")
+        val user = findUser(login, msgs)
+        if (user == null) {
+            msgs.add(Message("User with login $login not found", ""))
+            return false
+        }
+        return dbConnector.delete(user)
     }
 
     override fun getAllUsers(msgs: MutableList<Message>): List<User> {

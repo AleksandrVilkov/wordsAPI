@@ -16,7 +16,7 @@ class ConnectorProxy(
 ) : DataBaseConnector {
     val logger = Logger("PSQLConnector")
 
-    override fun save(data: Entity):Boolean {
+    override fun save(data: Entity): Boolean {
         val sqlQuery = "INSERT INTO ${data.getTable()}${data.getColumns()} VALUES ${data.getValues()};"
         logger.debug("sending query $sqlQuery to PSQL")
         return connector.sendQueryWithoutResult(sqlQuery)
@@ -28,7 +28,21 @@ class ConnectorProxy(
         return connector.sendQuery(sqlQuery)
     }
 
-    override fun update(data: Entity): Boolean {
+    override fun update(
+        tableName: String,
+        paramsValue: Map<String, String>,
+        uidObject: String
+    ): Boolean {
+        var sqlQuery = "UPDATE $tableName SET "
+        var iter = 1
+        for (pair in paramsValue) {
+            sqlQuery += "${pair.key} = ${pair.value}"
+            if (iter != paramsValue.size)
+                sqlQuery += ","
+
+            iter++
+        }
+        sqlQuery += " WHERE uid = $uidObject;"
         TODO("Not yet implemented")
     }
 

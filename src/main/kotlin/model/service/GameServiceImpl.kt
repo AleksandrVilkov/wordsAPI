@@ -33,7 +33,7 @@ class GameServiceImpl(
         return if (dbConnector.save(game)) {
             game
         } else {
-            val text = "Не удалось создать игру для полльзователя  ${game.userUid}"
+            val text = "Не удалось создать игру для пользователя  ${game.userUid}"
             msgs.add(Message(text, ""))
             logger.debug(text)
             null
@@ -121,7 +121,13 @@ class GameServiceImpl(
     }
 
     override fun updateGames(game: Game, msgs: MutableList<Message>): Boolean {
-      TODO()
+        val tableName = dbConnector.getProperties().getProperty("gamesTable")
+        val values = mapOf<String, String>(
+            "status" to game.status.name,
+            "countattempts" to game.countAttempts.toString(),
+            "updated" to LocalDate.now().toString()
+        )
+        return dbConnector.update(tableName = tableName, paramsValue = values, uidObject = game.uid)
     }
 
 

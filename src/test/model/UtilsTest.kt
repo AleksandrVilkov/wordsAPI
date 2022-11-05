@@ -16,7 +16,7 @@ class UtilsTest {
         /*Буквы, которые подходят, с индексами, где они могут находиться в слове (Начало расчета с единицы) */
         val suitableLetters = mapOf(
             "р" to listOf(1, 5),
-            "ж" to listOf(1,2,3),
+            "ж" to listOf(1, 2, 3),
             "а" to listOf(4)
 
         )

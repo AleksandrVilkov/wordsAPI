@@ -6,8 +6,10 @@ import controller.entityVO.Status
 import controller.entityVO.WordVO
 import model.Entity.Game
 import model.Entity.GameStatus
+import model.Entity.LetterStatus
 import model.Entity.Message
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
@@ -22,17 +24,12 @@ class GameController(
     val wordService: WordServiceInterface
 ) {
 
-    @PostMapping("/win/save")
-    fun saveWin(): Response {
-        return Response(Status.ERROR, "Not implemented")
-    }
-
     @GetMapping("/start")
-    fun startGame(@RequestParam userUid: String, @RequestParam countLettersInWord: Int): Response {
+    fun startGame(@RequestParam userUid: String, @RequestParam countLettersInWord: Int): ResponseEntity<Response> {
         val msgs = mutableListOf<Message>()
         val userGames = gameService.readUserGames(userUid, msgs)
         if (!canStartGame(userGames, msgs)) {
-            return Response(Status.ERROR, getDescription(msgs))
+            return ResponseEntity.ok(Response(Status.ERROR, getDescription(msgs)))
         }
         val game = Game(
             userUid = userUid,
@@ -42,7 +39,7 @@ class GameController(
         )
         val result = gameService.createGame(game, msgs)
         if (result != null || msgs.isEmpty()) {
-            return Response(Status.OK, "", result?.let {
+            return ResponseEntity.ok(Response(Status.OK, "", result?.let {
                 val gameVO = GameVO(
                     uid = it.uid,
                     created = result.created.toString(),
@@ -51,9 +48,9 @@ class GameController(
                     hiddenWord = result.hiddenWord
                 )
                 gameVO
-            })
+            }))
         }
-        return Response(Status.ERROR, getDescription(msgs))
+        return ResponseEntity.ok(Response(Status.ERROR, getDescription(msgs)))
     }
 
     @GetMapping("/check")
@@ -65,11 +62,6 @@ class GameController(
         return Response(Status.OK, "", WordVO(value = foundWord.wordValue))
     }
 
-    @PostMapping("/defeat/save")
-    fun saveDefeat(): Response {
-        //  TODO
-        return Response(Status.ERROR, "Not implemented")
-    }
 
     @GetMapping("/history")
     fun getAllHistory(@RequestParam userUid: String): Response {
@@ -93,9 +85,45 @@ class GameController(
         TODO()
     }
 
+//    @GetMapping("/randomWord")
+//    fun getRandomWord(@RequestParam countLetters: Int): Response {
+//        val msgs = mutableListOf<Message>()
+//        val correctCountLetters = checkCount(countLetters)
+//        val word = wordService.findRandomWord(countLetters, msgs)
+//        if (msgs.isEmpty() && correctCountLetters) {
+//            Response(Status.OK, "", word?.let { WordVO(it.wordValue) })
+//        }
+//        return Response(Status.ERROR, getDescription(msgs))
+//    }
+
     @GetMapping("/records")
     fun getRecords(): Response {
         //  TODO
         return Response(Status.ERROR, "Not implemented")
+    }
+
+    //сохранить победу, сохранить попытку
+    @PostMapping("/save")
+    fun saveDefeat(): Response {
+        //  TODO
+        return Response(Status.ERROR, "Not implemented")
+    }
+
+    @GetMapping("/attempt")
+    fun makeAttempt(
+        @RequestParam userUid: String,
+        @RequestParam gameUid: String,
+        @RequestParam attemptWord: String
+    ): ResponseEntity<MutableMap<String, LetterStatus>>? {
+        val msgs = mutableListOf<Message>()
+        val result = mutableMapOf<String, LetterStatus>()
+        gameService.attemptResult(
+            attemptWord = attemptWord,
+            userUid = userUid,
+            gameUid = gameUid,
+            msgs = msgs,
+            result = result
+        )
+        return ResponseEntity.ok(result)
     }
 }

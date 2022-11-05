@@ -2,13 +2,14 @@ package model.service
 
 import controller.GameServiceInterface
 import controller.WordServiceInterface
-import jdk.jshell.Snippet
 import logger.Logger
 import model.Entity.Game
 import model.Entity.GameStatus
+import model.Entity.LetterStatus
 import model.Entity.Message
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import java.lang.RuntimeException
 import java.time.LocalDate
 
 @Component
@@ -37,6 +38,58 @@ class GameServiceImpl(
             msgs.add(Message(text, ""))
             logger.debug(text)
             null
+        }
+    }
+
+    override fun foundUserGameInGame(userUid: String, gameUid: String, msgs: MutableList<Message>): Game? {
+        val result = dbConnector.read(dbConnector.getProperties().getProperty("gamesTable"), "uid", "'$gameUid'")
+        val games = mutableListOf<Game>()
+        while (result.next()) {
+            val gameStatus = defineGameStatus(result.getString("status"))
+            val userUidFromGame = result.getString("useruid")
+            if (gameStatus.equals(GameStatus.IN_GAME) && userUidFromGame.equals(userUid)) {
+                games.add(
+                    Game(
+                        created = LocalDate.parse(result.getString("created")),
+                        userUid = userUidFromGame,
+                        updated = LocalDate.parse(result.getString("updated")),
+                        status = gameStatus,
+                        time = result.getString("time"),
+                        hiddenWord = result.getString("hiddenWord"),
+                        countLettersInHiddenWord = result.getString("hiddenWord").length,
+                        countAttempts = result.getInt("countAttempts")
+                    )
+                )
+            }
+        }
+        if (games.size != 1) {
+            msgs.add(Message("Ошибка получения игры. Найдено более 1 игры в статусе \"В игре\"", ""))
+            return null
+        } else return games[0]
+    }
+
+    //возможно будет нужна мапа позиция буквы - мапа буква статус
+    override fun attemptResult(userUid: String,
+                               gameUid : String,
+                               attemptWord: String,
+                               msgs: MutableList<Message>,
+                               result: MutableMap<String, LetterStatus>) {
+        if (wordService.findWord(attemptWord, msgs) != null) {
+            val userGame = foundUserGameInGame(userUid,gameUid,msgs) ?: throw RuntimeException("Game not found")
+            val attemptArray = attemptWord.toCharArray()
+            for (attemptLetter in attemptArray) {
+                if (!userGame.hiddenWord.contains(attemptLetter.lowercase())) {
+                    result[attemptLetter.toString()] = LetterStatus.MISSING
+                } else {
+                    val hiddenIndex = userGame.hiddenWord.indexOf(attemptLetter)
+                    val attemptIndex = attemptWord.indexOf(attemptLetter)
+                    val status: LetterStatus
+                    if (hiddenIndex == attemptIndex)
+                        status = LetterStatus.GUESSED
+                    else status = LetterStatus.IS_ELSEWHERE
+                    result[attemptLetter.toString()] = status
+                }
+            }
         }
     }
 

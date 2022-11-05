@@ -11,6 +11,9 @@ enum class GameStatus {
 enum class UserRole {
     USER, MODERATOR, ADMIN, NOT_DETERMINED
 }
+enum class LetterStatus{
+    GUESSED, MISSING, IS_ELSEWHERE
+}
 
 enum class UserStatus {
     ACTIVE, NOT_ACTIVE, DELETED, NOT_DETERMINED
@@ -59,7 +62,7 @@ data class Game(
     var time: String = "",
     var hiddenWord: String = "",
     var countLettersInHiddenWord: Int,
-    val countAttempts: Int = 0
+    var countAttempts: Int = 0
 ) : Entity {
     override fun getTable(): String {
         return "games"

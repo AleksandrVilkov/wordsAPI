@@ -9,7 +9,6 @@ import model.Entity.LetterStatus
 import model.Entity.Message
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.lang.RuntimeException
 import java.time.LocalDate
 
 @Component
@@ -69,13 +68,17 @@ class GameServiceImpl(
     }
 
     //возможно будет нужна мапа позиция буквы - мапа буква статус
-    override fun attemptResult(userUid: String,
-                               gameUid : String,
-                               attemptWord: String,
-                               msgs: MutableList<Message>,
-                               result: MutableMap<String, LetterStatus>) {
+    override fun attemptResult(
+        userUid: String,
+        gameUid: String,
+        attemptWord: String,
+        msgs: MutableList<Message>,
+        result: MutableMap<String, LetterStatus>
+    ) {
         if (wordService.findWord(attemptWord, msgs) != null) {
-            val userGame = foundUserGameInGame(userUid,gameUid,msgs) ?: throw RuntimeException("Game not found")
+            val userGame = foundUserGameInGame(userUid, gameUid, msgs) ?: throw RuntimeException("Game not found")
+            if (userGame.hiddenWord.length != attemptWord.length)
+                throw RuntimeException("Word length does not match")
             val attemptArray = attemptWord.toCharArray()
             for (attemptLetter in attemptArray) {
                 if (!userGame.hiddenWord.contains(attemptLetter.lowercase())) {
@@ -90,7 +93,11 @@ class GameServiceImpl(
                     result[attemptLetter.toString()] = status
                 }
             }
+            userGame.countAttempts += 1
+            userGame.updated = LocalDate.now()
+            updateGames(game = userGame, msgs = msgs)
         }
+
     }
 
     override fun readUserGames(userUid: String, msgs: MutableList<Message>): List<Game> {
@@ -113,8 +120,8 @@ class GameServiceImpl(
         return games
     }
 
-    override fun updateGames(gameUid: String, msgs: MutableList<Message>): Boolean {
-        TODO("Not yet implemented")
+    override fun updateGames(game: Game, msgs: MutableList<Message>): Boolean {
+      TODO()
     }
 
 

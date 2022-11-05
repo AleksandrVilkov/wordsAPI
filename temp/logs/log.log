@@ -239,3 +239,16 @@ DEBUG: JwtUserDetailsService Sat Nov 05 19:31:04 MSK 2022 user with login test s
 DEBUG: PSQLConnector Sat Nov 05 19:31:04 MSK 2022 sending query SELECT * FROM words WHERE value = 'униgg'; to PSQL
 DEBUG: PSQLConnector Sat Nov 05 19:31:04 MSK 2022 SELECT * FROM words WHERE value = 'униgg';
 DEBUG: WordServiceImpl Sat Nov 05 19:31:04 MSK 2022 Найдено некоректное количество слов -  0.  Ожидалось 1.  Искомое слово -  униgg
+DEBUG: PSQLConnector Sat Nov 05 20:10:21 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sat Nov 05 20:10:21 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sat Nov 05 20:10:21 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sat Nov 05 20:10:21 MSK 2022 sending query SELECT * FROM words WHERE value = 'униgg'; to PSQL
+DEBUG: PSQLConnector Sat Nov 05 20:10:21 MSK 2022 SELECT * FROM words WHERE value = 'униgg';
+DEBUG: WordServiceImpl Sat Nov 05 20:10:21 MSK 2022 Найдено некоректное количество слов -  0.  Ожидалось 1.  Искомое слово -  униgg
+DEBUG: PSQLConnector Sat Nov 05 20:10:38 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sat Nov 05 20:10:38 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sat Nov 05 20:10:38 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sat Nov 05 20:10:38 MSK 2022 sending query SELECT * FROM words WHERE value = 'время'; to PSQL
+DEBUG: PSQLConnector Sat Nov 05 20:10:38 MSK 2022 SELECT * FROM words WHERE value = 'время';
+DEBUG: PSQLConnector Sat Nov 05 20:10:38 MSK 2022 sending query SELECT * FROM games WHERE uid = '7d450e26-60db-4487-95f3-6ca0b7f8f6d5'; to PSQL
+DEBUG: PSQLConnector Sat Nov 05 20:10:38 MSK 2022 SELECT * FROM games WHERE uid = '7d450e26-60db-4487-95f3-6ca0b7f8f6d5';

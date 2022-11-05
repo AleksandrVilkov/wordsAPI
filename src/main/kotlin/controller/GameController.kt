@@ -11,7 +11,11 @@ import model.Entity.Message
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
+import java.lang.RuntimeException
 import java.time.LocalDate
 
 @Component
@@ -103,9 +107,13 @@ class GameController(
     }
 
     //сохранить победу, сохранить попытку
-    @PostMapping("/save")
-    fun saveDefeat(): Response {
-        //  TODO
+    @GetMapping("/save/win")
+    fun saveDefeat(@RequestParam userUid: String, @RequestParam gameUid: String): Response {
+        val msgs = mutableListOf<Message>()
+        val game = gameService.foundUserGameInGame(userUid = userUid, gameUid = gameUid, msgs)
+        if(game == null)
+            throw RuntimeException("Game not found")
+        game.status = GameStatus.FINISHED
         return Response(Status.ERROR, "Not implemented")
     }
 

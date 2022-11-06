@@ -106,15 +106,14 @@ class GameController(
         return Response(Status.ERROR, "Not implemented")
     }
 
-    //сохранить победу, сохранить попытку
     @GetMapping("/save/win")
     fun saveDefeat(@RequestParam userUid: String, @RequestParam gameUid: String): Response {
         val msgs = mutableListOf<Message>()
         val game = gameService.foundUserGameInGame(userUid = userUid, gameUid = gameUid, msgs)
-            ?: throw RuntimeException("Game not found")
+            ?: return Response(Status.ERROR,"Game with status IN GAME not found")
         game.status = GameStatus.FINISHED
         gameService.updateGames(game, msgs)
-        return Response(Status.ERROR, "Not implemented")
+        return Response(Status.OK, "win save")
     }
 
     @GetMapping("/attempt")

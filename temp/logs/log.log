@@ -327,3 +327,114 @@ DEBUG: JwtUserDetailsService Sun Nov 06 15:43:49 MSK 2022 user with login test s
 DEBUG: PSQLConnector Sun Nov 06 15:43:51 MSK 2022 sending query SELECT * FROM games WHERE uid = '7d450e26-60db-4487-95f3-6ca0b7f8f6d5'; to PSQL
 DEBUG: PSQLConnector Sun Nov 06 15:43:51 MSK 2022 SELECT * FROM games WHERE uid = '7d450e26-60db-4487-95f3-6ca0b7f8f6d5';
 DEBUG: PSQLConnector Sun Nov 06 15:43:57 MSK 2022 UPDATE games SET status = 'FINISHED',countattempts = '0',updated = '2022-11-06' WHERE uid = '7d450e26-60db-4487-95f3-6ca0b7f8f6d5';
+DEBUG: PSQLConnector Sun Nov 06 15:48:43 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:48:43 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:48:43 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:48:43 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:48:43 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:48:43 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:49:00 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:49:00 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:49:00 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:49:00 MSK 2022 sending query SELECT * FROM games WHERE useruid = '628374c6-5f0c-4130-a75f-99c107de73a6'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:49:00 MSK 2022 SELECT * FROM games WHERE useruid = '628374c6-5f0c-4130-a75f-99c107de73a6';
+DEBUG: PSQLConnector Sun Nov 06 15:49:00 MSK 2022 sending query SELECT * FROM words WHERE countletters = 5; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:49:00 MSK 2022 SELECT * FROM words WHERE countletters = 5;
+DEBUG: PSQLConnector Sun Nov 06 15:49:00 MSK 2022 sending query INSERT INTO games(uid, created, useruid, updated, status, time, hiddenWord, countAttempts) VALUES ('ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37', '2022-11-06', '628374c6-5f0c-4130-a75f-99c107de73a6', '2022-11-06', 'IN_GAME', '', 'маран', '0'); to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:49:00 MSK 2022 INSERT INTO games(uid, created, useruid, updated, status, time, hiddenWord, countAttempts) VALUES ('ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37', '2022-11-06', '628374c6-5f0c-4130-a75f-99c107de73a6', '2022-11-06', 'IN_GAME', '', 'маран', '0');
+DEBUG: PSQLConnector Sun Nov 06 15:49:05 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:49:05 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:49:05 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:49:05 MSK 2022 sending query SELECT * FROM games WHERE useruid = '628374c6-5f0c-4130-a75f-99c107de73a6'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:49:05 MSK 2022 SELECT * FROM games WHERE useruid = '628374c6-5f0c-4130-a75f-99c107de73a6';
+DEBUG: PSQLConnector Sun Nov 06 15:50:32 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:50:32 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:50:32 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:50:32 MSK 2022 sending query SELECT * FROM words WHERE value = 'каран'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:50:32 MSK 2022 SELECT * FROM words WHERE value = 'каран';
+DEBUG: WordServiceImpl Sun Nov 06 15:50:32 MSK 2022 Найдено некоректное количество слов -  0.  Ожидалось 1.  Искомое слово -  каран
+DEBUG: PSQLConnector Sun Nov 06 15:50:42 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:50:42 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:50:42 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:50:42 MSK 2022 sending query SELECT * FROM words WHERE value = 'каран'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:50:42 MSK 2022 SELECT * FROM words WHERE value = 'каран';
+DEBUG: WordServiceImpl Sun Nov 06 15:50:42 MSK 2022 Найдено некоректное количество слов -  0.  Ожидалось 1.  Искомое слово -  каран
+DEBUG: PSQLConnector Sun Nov 06 15:50:47 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:50:47 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:50:47 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:50:47 MSK 2022 sending query SELECT * FROM words WHERE value = 'банан'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:50:47 MSK 2022 SELECT * FROM words WHERE value = 'банан';
+DEBUG: PSQLConnector Sun Nov 06 15:50:47 MSK 2022 sending query SELECT * FROM games WHERE uid = '628374c6-5f0c-4130-a75f-99c107de73a6'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:50:47 MSK 2022 SELECT * FROM games WHERE uid = '628374c6-5f0c-4130-a75f-99c107de73a6';
+DEBUG: PSQLConnector Sun Nov 06 15:50:47 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:50:47 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:50:47 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:51:17 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:51:17 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:51:17 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:51:17 MSK 2022 sending query SELECT * FROM words WHERE value = 'банан'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:51:17 MSK 2022 SELECT * FROM words WHERE value = 'банан';
+DEBUG: PSQLConnector Sun Nov 06 15:51:23 MSK 2022 sending query SELECT * FROM games WHERE uid = '628374c6-5f0c-4130-a75f-99c107de73a6'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:51:23 MSK 2022 SELECT * FROM games WHERE uid = '628374c6-5f0c-4130-a75f-99c107de73a6';
+DEBUG: PSQLConnector Sun Nov 06 15:51:25 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:51:25 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:51:25 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:51:40 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:51:40 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:51:40 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:51:40 MSK 2022 sending query SELECT * FROM words WHERE value = 'банан'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:51:40 MSK 2022 SELECT * FROM words WHERE value = 'банан';
+DEBUG: PSQLConnector Sun Nov 06 15:51:45 MSK 2022 sending query SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:51:45 MSK 2022 SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37';
+DEBUG: PSQLConnector Sun Nov 06 15:51:48 MSK 2022 UPDATE games SET status = 'IN_GAME',countattempts = '1',updated = '2022-11-06' WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37';
+DEBUG: PSQLConnector Sun Nov 06 15:52:23 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:52:23 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:52:23 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:52:23 MSK 2022 sending query SELECT * FROM words WHERE value = 'банан'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:52:23 MSK 2022 SELECT * FROM words WHERE value = 'банан';
+DEBUG: PSQLConnector Sun Nov 06 15:52:23 MSK 2022 sending query SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:52:23 MSK 2022 SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37';
+DEBUG: PSQLConnector Sun Nov 06 15:52:23 MSK 2022 UPDATE games SET status = 'IN_GAME',countattempts = '2',updated = '2022-11-06' WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37';
+DEBUG: PSQLConnector Sun Nov 06 15:52:34 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:52:34 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:52:34 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:52:34 MSK 2022 sending query SELECT * FROM words WHERE value = 'маран'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:52:34 MSK 2022 SELECT * FROM words WHERE value = 'маран';
+DEBUG: PSQLConnector Sun Nov 06 15:52:34 MSK 2022 sending query SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:52:34 MSK 2022 SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37';
+DEBUG: PSQLConnector Sun Nov 06 15:52:34 MSK 2022 UPDATE games SET status = 'IN_GAME',countattempts = '3',updated = '2022-11-06' WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37';
+DEBUG: PSQLConnector Sun Nov 06 15:53:00 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:53:00 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:53:00 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:53:00 MSK 2022 sending query SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:53:00 MSK 2022 SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37';
+DEBUG: PSQLConnector Sun Nov 06 15:53:00 MSK 2022 UPDATE games SET status = 'FINISHED',countattempts = '3',updated = '2022-11-06' WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37';
+DEBUG: PSQLConnector Sun Nov 06 15:54:05 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:54:05 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:54:05 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:54:07 MSK 2022 sending query SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:54:07 MSK 2022 SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37';
+DEBUG: PSQLConnector Sun Nov 06 15:54:07 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:54:07 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:54:07 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:54:32 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:54:32 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:54:32 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:54:35 MSK 2022 sending query SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:54:35 MSK 2022 SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37';
+DEBUG: PSQLConnector Sun Nov 06 15:54:35 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:54:35 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:54:35 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:54:52 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:54:52 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:54:52 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:54:55 MSK 2022 sending query SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:54:55 MSK 2022 SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37';
+DEBUG: PSQLConnector Sun Nov 06 15:54:55 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:54:55 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:54:55 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:56:16 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:56:16 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sun Nov 06 15:56:16 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sun Nov 06 15:56:16 MSK 2022 sending query SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37'; to PSQL
+DEBUG: PSQLConnector Sun Nov 06 15:56:16 MSK 2022 SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37';

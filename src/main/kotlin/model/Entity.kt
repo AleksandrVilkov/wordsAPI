@@ -26,7 +26,6 @@ interface Entity {
     fun getValues(): String
 }
 
-//TODO возвращать названия таблиц из пропсов
 class User(
     override val uid: String = UUID.randomUUID().toString(),
     val created: LocalDate = LocalDate.now(),

@@ -49,6 +49,7 @@ class GameServiceImpl(
             if (gameStatus.equals(GameStatus.IN_GAME) && userUidFromGame.equals(userUid)) {
                 games.add(
                     Game(
+                        uid = result.getString("uid"),
                         created = LocalDate.parse(result.getString("created")),
                         userUid = userUidFromGame,
                         updated = LocalDate.parse(result.getString("updated")),

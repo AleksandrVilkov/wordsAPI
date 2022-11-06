@@ -36,14 +36,14 @@ class ConnectorProxy(
         var sqlQuery = "UPDATE $tableName SET "
         var iter = 1
         for (pair in paramsValue) {
-            sqlQuery += "${pair.key} = ${pair.value}"
+            sqlQuery += "${pair.key} = '${pair.value}'"
             if (iter != paramsValue.size)
                 sqlQuery += ","
 
             iter++
         }
-        sqlQuery += " WHERE uid = $uidObject;"
-        TODO("Not yet implemented")
+        sqlQuery += " WHERE uid = '$uidObject';"
+        return connector.sendQueryWithoutResult(sqlQuery)
     }
 
     override fun delete(data: Entity): Boolean {

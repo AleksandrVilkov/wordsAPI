@@ -111,9 +111,9 @@ class GameController(
     fun saveDefeat(@RequestParam userUid: String, @RequestParam gameUid: String): Response {
         val msgs = mutableListOf<Message>()
         val game = gameService.foundUserGameInGame(userUid = userUid, gameUid = gameUid, msgs)
-        if(game == null)
-            throw RuntimeException("Game not found")
+            ?: throw RuntimeException("Game not found")
         game.status = GameStatus.FINISHED
+        gameService.updateGames(game, msgs)
         return Response(Status.ERROR, "Not implemented")
     }
 

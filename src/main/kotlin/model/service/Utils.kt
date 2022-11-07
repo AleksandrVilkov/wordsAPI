@@ -1,15 +1,12 @@
 package model
 
-import model.Entity.UserRole
-import model.Entity.UserStatus
 import org.apache.commons.codec.binary.Base64
 import org.springframework.security.crypto.bcrypt.BCrypt
-import java.time.LocalDate
 
 
 fun encode(pass: String): String {
     val base64 = Base64()
-    return BCrypt.hashpw(pass,BCrypt.gensalt())
+    return BCrypt.hashpw(pass, BCrypt.gensalt())
 }
 
 fun defineUserRole(roleString: String): UserRole {

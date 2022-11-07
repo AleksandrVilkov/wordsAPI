@@ -1,7 +1,7 @@
 package controller
 
 import model.Entity.Game
-import model.Entity.GameStatus
+import model.GameStatus
 import model.Entity.Message
 
 fun checkCount(count: Int): Boolean {

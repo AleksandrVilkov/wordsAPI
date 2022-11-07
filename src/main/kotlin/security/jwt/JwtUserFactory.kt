@@ -1,8 +1,8 @@
 package security.jwt
 
 import model.Entity.User
-import model.Entity.UserRole
-import model.Entity.UserStatus
+import model.UserRole
+import model.UserStatus
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 

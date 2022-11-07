@@ -5,8 +5,8 @@ import controller.entityVO.Response
 import controller.entityVO.Status
 import controller.entityVO.WordVO
 import model.Entity.Game
-import model.Entity.GameStatus
-import model.Entity.LetterStatus
+import model.GameStatus
+import model.LetterStatus
 import model.Entity.Message
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity

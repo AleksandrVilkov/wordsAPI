@@ -1,7 +1,7 @@
 package controller
 
 import model.Entity.Game
-import model.Entity.LetterStatus
+import model.LetterStatus
 import model.Entity.Message
 
 interface GameServiceInterface {

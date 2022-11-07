@@ -5,8 +5,8 @@ import controller.entityVO.Status
 import controller.entityVO.UserVO
 import model.Entity.Message
 import model.Entity.User
-import model.Entity.UserRole
-import model.Entity.UserStatus
+import model.UserRole
+import model.UserStatus
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.*

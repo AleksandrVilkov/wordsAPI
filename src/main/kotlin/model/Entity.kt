@@ -3,6 +3,7 @@ package model.Entity
 import org.springframework.beans.factory.annotation.Value
 import java.time.LocalDate
 import java.util.*
+import kotlin.collections.ArrayList
 
 enum class GameStatus {
     IN_GAME, FINISHED, ERROR, NOT_IN_GAME, NOT_DETERMINED
@@ -61,7 +62,8 @@ data class Game(
     var time: String = "",
     var hiddenWord: String = "",
     var countLettersInHiddenWord: Int,
-    var countAttempts: Int = 0
+    var countAttempts: Int = 0,
+    val attemptWords: MutableList<String> = mutableListOf()
 ) : Entity {
     override fun getTable(): String {
         return "games"

@@ -57,6 +57,7 @@ class GameServiceImpl(
                         time = result.getString("time"),
                         hiddenWord = result.getString("hiddenWord"),
                         countLettersInHiddenWord = result.getString("hiddenWord").length,
+                        attemptWords = getAttemptWordsFromString(result.getString("attemptWords")),
                         countAttempts = result.getInt("countAttempts")
                     )
                 )
@@ -67,6 +68,16 @@ class GameServiceImpl(
             return null
         } else return games[0]
     }
+
+    private fun getAttemptWordsFromString(string: String): MutableList<String> {
+        val array = string.split(", ")
+        val result = mutableListOf<String>()
+        for (str in array) {
+            result.add(str)
+        }
+        return result
+    }
+
 
     //возможно будет нужна мапа позиция буквы - мапа буква статус
     override fun attemptResult(
@@ -96,6 +107,7 @@ class GameServiceImpl(
             }
             userGame.countAttempts += 1
             userGame.updated = LocalDate.now()
+            userGame.attemptWords.add(attemptWord)
             updateGames(game = userGame, msgs = msgs)
         }
 

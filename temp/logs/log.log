@@ -438,3 +438,6 @@ DEBUG: PSQLConnector Sun Nov 06 15:56:16 MSK 2022 SELECT * FROM users WHERE logi
 DEBUG: JwtUserDetailsService Sun Nov 06 15:56:16 MSK 2022 user with login test successfully loaded
 DEBUG: PSQLConnector Sun Nov 06 15:56:16 MSK 2022 sending query SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37'; to PSQL
 DEBUG: PSQLConnector Sun Nov 06 15:56:16 MSK 2022 SELECT * FROM games WHERE uid = 'ff45fb45-8ba2-44a3-b3bd-6d0747ee9a37';
+DEBUG: PSQLConnector Mon Nov 07 20:23:10 MSK 2022 SELECT * FROM words WHERE countletters = 5
+DEBUG: PSQLConnector Mon Nov 07 20:33:54 MSK 2022 SELECT * FROM words WHERE countletters = 5
+DEBUG: PSQLConnector Mon Nov 07 20:36:12 MSK 2022 SELECT * FROM words WHERE countletters = 5

@@ -1,5 +1,4 @@
-package model
-
+package model.enumCollectilos
 enum class GameStatus {
     IN_GAME, FINISHED, ERROR, NOT_IN_GAME, NOT_DETERMINED
 }

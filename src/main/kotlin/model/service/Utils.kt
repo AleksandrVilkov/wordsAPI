@@ -1,5 +1,7 @@
 package model
 
+import model.enumCollectilos.UserRole
+import model.enumCollectilos.UserStatus
 import org.apache.commons.codec.binary.Base64
 import org.springframework.security.crypto.bcrypt.BCrypt
 

@@ -1,12 +1,10 @@
 package model.Entity
 
-import org.springframework.beans.factory.annotation.Value
 import java.time.LocalDate
 import java.util.*
-import model.UserRole
-import model.UserStatus
-import model.GameStatus
-import kotlin.collections.ArrayList
+import model.enumCollectilos.UserRole
+import model.enumCollectilos.UserStatus
+import model.enumCollectilos.GameStatus
 
 interface Entity {
     val uid: String
@@ -18,7 +16,7 @@ interface Entity {
 class User(
     override val uid: String = UUID.randomUUID().toString(),
     val created: LocalDate = LocalDate.now(),
-    val role:   UserRole = UserRole.USER,
+    val role: UserRole = UserRole.USER,
     val status: UserStatus = UserStatus.NOT_DETERMINED,
     val login: String,
     var pass: String

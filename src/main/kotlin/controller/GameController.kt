@@ -5,8 +5,8 @@ import controller.entityVO.Response
 import controller.entityVO.Status
 import controller.entityVO.WordVO
 import model.Entity.Game
-import model.GameStatus
-import model.LetterStatus
+import model.enumCollectilos.GameStatus
+import model.enumCollectilos.LetterStatus
 import model.Entity.Message
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import java.lang.RuntimeException
 import java.time.LocalDate
 
 @Component

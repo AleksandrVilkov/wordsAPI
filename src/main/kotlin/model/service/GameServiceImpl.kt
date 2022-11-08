@@ -4,8 +4,8 @@ import controller.GameServiceInterface
 import controller.WordServiceInterface
 import logger.Logger
 import model.Entity.Game
-import model.GameStatus
-import model.LetterStatus
+import model.enumCollectilos.GameStatus
+import model.enumCollectilos.LetterStatus
 import model.Entity.Message
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component

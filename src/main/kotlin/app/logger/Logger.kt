@@ -5,7 +5,6 @@ import java.io.BufferedWriter
 import java.io.FileWriter
 import java.util.*
 
-@Service
 class Logger(
     private var className: String,
 ) {

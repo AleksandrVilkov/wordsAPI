@@ -1,12 +1,18 @@
 package app.controller
 
-import model.Entity.Game
 import app.model.enumCollectilos.GameStatus
+import model.Entity.Game
 import model.Entity.Message
+import org.springframework.beans.factory.annotation.Value
 
-fun checkCount(count: Int): Boolean {
-    //TODO вынести в настройки
-    return count in 4..6
+fun checkCount(
+    count: Int,
+    @Value("min.count.in.word")
+    min: Int,
+    @Value("max.count.in.word")
+    max: Int
+): Boolean {
+    return count in min..max
 }
 
 fun getDescription(msgs: List<Message>): String {

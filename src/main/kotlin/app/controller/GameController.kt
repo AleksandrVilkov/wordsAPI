@@ -93,12 +93,6 @@ class GameController(
         return ResponseEntity.ok(result)
     }
 
-    @GetMapping("/records")
-    fun getRecords(): Response {
-        //  TODO
-        return Response(Status.ERROR, "Not implemented")
-    }
-
     @GetMapping("/save/win")
     fun saveDefeat(@RequestParam userUid: String, @RequestParam gameUid: String): ResponseEntity<String> {
         val msgs = mutableListOf<Message>()

@@ -1,6 +1,6 @@
 package model
 
-import model.repository.PSQLConnector
+import app.repository.PSQLConnector
 import org.junit.jupiter.api.Test
 
 class UtilsTest {

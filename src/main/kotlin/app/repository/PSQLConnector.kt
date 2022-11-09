@@ -5,6 +5,7 @@ import org.postgresql.util.PSQLException
 import org.springframework.stereotype.Component
 import java.io.FileInputStream
 import java.sql.Connection
+import java.sql.DriverManager
 import java.sql.ResultSet
 import java.util.*
 
@@ -21,8 +22,8 @@ class PSQLConnector {
         val properties = Properties()
         properties.load(file)
         props = properties
-//        if (!::connection.isInitialized)
-//            connection = DriverManager.getConnection(getJDBCURL(), getLogin(), getPass())
+        if (!::connection.isInitialized)
+            connection = DriverManager.getConnection(getJDBCURL(), getLogin(), getPass())
     }
 
 

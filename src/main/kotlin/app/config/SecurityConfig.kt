@@ -29,11 +29,12 @@ class SecurityConfig(
     override fun configure(httpSecurity: HttpSecurity) {
         httpSecurity
             .httpBasic().disable()
+            .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
             .antMatchers(loginEndpoint).permitAll()
-            .antMatchers(adminEndpoint).hasRole("ADMIN")
+            .antMatchers(adminEndpoint).permitAll()
             .anyRequest().authenticated()
             .and()
             .apply(JwtConfigure(jwtTokenProvider))

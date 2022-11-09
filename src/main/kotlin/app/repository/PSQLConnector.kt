@@ -2,14 +2,14 @@ package app.repository
 
 import app.logger.Logger
 import org.postgresql.util.PSQLException
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 import java.io.FileInputStream
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
 import java.util.*
 
-@Component
+@Repository
 class PSQLConnector {
     private final val props: Properties
     private val filePath = "src/main/resources/application.properties"
@@ -65,7 +65,9 @@ class PSQLConnector {
         val file = FileInputStream(filePath)
         val props = Properties()
         props.load(file)
-        return props.getProperty("psql.url") + props.getProperty("psql.host") + props.getProperty("psql.port") + props.getProperty("psql.dataBaseName")
+        return props.getProperty("psql.url") + props.getProperty("psql.host") + props.getProperty("psql.port") + props.getProperty(
+            "psql.dataBaseName"
+        )
     }
 
     private fun getLogin(): String {

@@ -5,10 +5,11 @@ import app.model.service.DataBaseConnector
 import model.Entity.Entity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 import java.sql.ResultSet
 import java.util.*
 
-@Component
+@Repository
 class ConnectorProxy(
     @Autowired
     val connector: PSQLConnector

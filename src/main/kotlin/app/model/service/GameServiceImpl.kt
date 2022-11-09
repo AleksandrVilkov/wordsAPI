@@ -3,19 +3,19 @@ package app.model.service
 import app.controller.GameServiceInterface
 import app.controller.WordServiceInterface
 import app.logger.Logger
-import model.Entity.Game
 import app.model.enumCollectilos.GameStatus
 import app.model.enumCollectilos.LetterStatus
+import model.Entity.Game
 import model.Entity.Message
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import java.time.LocalDate
 
-@Component
+@Service
 class GameServiceImpl(
     @Autowired
     private val dbConnector: DataBaseConnector,
-    private val wordService: WordServiceInterface
+    private val wordService: WordServiceInterface,
 ) : GameServiceInterface {
     val logger = Logger("GameServiceImpl")
 

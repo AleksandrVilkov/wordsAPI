@@ -11,7 +11,6 @@ import java.util.*
 
 @Component
 class PSQLConnector {
-    // Использовать @value
     private final val props: Properties
     private val filePath = "src/main/resources/application.properties"
     private lateinit var connection: Connection
@@ -66,15 +65,15 @@ class PSQLConnector {
         val file = FileInputStream(filePath)
         val props = Properties()
         props.load(file)
-        return props.getProperty("url") + props.getProperty("host") + props.getProperty("port") + props.getProperty("dataBaseName")
+        return props.getProperty("psql.url") + props.getProperty("psql.host") + props.getProperty("psql.port") + props.getProperty("psql.dataBaseName")
     }
 
     private fun getLogin(): String {
-        return props.getProperty("login")
+        return props.getProperty("psql.login")
     }
 
     private fun getPass(): String {
-        return props.getProperty("pass")
+        return props.getProperty("psql.pass")
     }
 
 }

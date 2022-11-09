@@ -11,6 +11,10 @@ fun encode(pass: String): String {
     return BCrypt.hashpw(pass, BCrypt.gensalt())
 }
 
+fun isEmptyString(str: String): Boolean {
+    return str == "" || str.isEmpty()
+}
+
 fun defineUserRole(roleString: String): UserRole {
     return when (roleString) {
         UserRole.USER.name -> UserRole.USER

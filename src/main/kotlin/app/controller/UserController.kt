@@ -3,13 +3,18 @@ package app.controller
 import app.controller.entityVO.Response
 import app.controller.entityVO.Status
 import app.controller.entityVO.UserVO
-import model.Entity.Message
-import model.Entity.User
 import app.model.enumCollectilos.UserRole
 import app.model.enumCollectilos.UserStatus
+import model.Entity.Message
+import model.Entity.User
+import org.apache.catalina.filters.AddDefaultCharsetFilter
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
 
 @Component
@@ -21,27 +26,25 @@ class UserController(
 ) {
 
     @GetMapping("/check")
-    fun checkUser(@RequestParam login: String): Response {
+    fun checkUser(@RequestParam login: String): ResponseEntity<Any> {
         val msgs = mutableListOf<Message>()
         val user = userService.findUser(login, msgs)
         return if (user != null && msgs.isEmpty()) {
-            Response(
-                Status.OK,
-                "",
+            ResponseEntity.ok(
                 UserVO(
                     login = user.login,
-                    status = user.status.name,
                     created = user.created.toString(),
-                    role = user.role.name
+                    status = user.status.toString(),
+                    role = user.role.toString()
                 )
             )
         } else {
-            return Response(Status.ERROR, "Login $login not found \n${getDescription(msgs)}")
+            return ResponseEntity.status(406).build()
         }
     }
 
     @GetMapping("/save")
-    fun saveUser(@RequestParam login: String, @RequestParam pass: String): Response {
+    fun saveUser(@RequestParam login: String, @RequestParam pass: String): ResponseEntity<Any> {
         val msgs = mutableListOf<Message>()
         userService.registerUser(
             User(
@@ -53,8 +56,8 @@ class UserController(
             ), msgs
         )
         if (msgs.isEmpty()) {
-            return Response(Status.OK, "user will be saved. User login: $login")
+            return ResponseEntity.ok("user will be saved. User login: $login")
         }
-        return Response(Status.ERROR, getDescription(msgs))
+        return ResponseEntity.status(500).build()
     }
 }

@@ -1,0 +1,5 @@
+DEBUG: PSQLConnector Sat Nov 12 14:49:41 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sat Nov 12 14:49:41 MSK 2022 SELECT * FROM users WHERE login = 'test';
+DEBUG: JwtUserDetailsService Sat Nov 12 14:49:41 MSK 2022 user with login test successfully loaded
+DEBUG: PSQLConnector Sat Nov 12 14:49:42 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
+DEBUG: PSQLConnector Sat Nov 12 14:49:42 MSK 2022 SELECT * FROM users WHERE login = 'test';

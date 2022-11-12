@@ -7,7 +7,6 @@ import org.springframework.security.crypto.bcrypt.BCrypt
 
 
 fun encode(pass: String): String {
-    val base64 = Base64()
     return BCrypt.hashpw(pass, BCrypt.gensalt())
 }
 

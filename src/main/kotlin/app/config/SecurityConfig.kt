@@ -10,6 +10,9 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.core.context.SecurityContext
+import org.springframework.security.web.server.context.ServerSecurityContextRepository
+import org.springframework.web.server.ServerWebExchange
 
 @Configuration
 class SecurityConfig(
@@ -26,17 +29,18 @@ class SecurityConfig(
         return super.authenticationManagerBean()
     }
 
+
     override fun configure(httpSecurity: HttpSecurity) {
         httpSecurity
             .httpBasic().disable()
             .csrf().disable()
+            .formLogin().disable()//Отключение формы логина
+            .authenticationManager(authenticationManagerBean())
             .authorizeRequests()
             .antMatchers("/user/save").permitAll()
             .and().csrf().disable().authorizeRequests()
             .antMatchers("/auth/login").permitAll()
             .and()
-            //TODO не дает токен. Нужно настроить
-
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()

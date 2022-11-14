@@ -30,12 +30,17 @@ class SecurityConfig(
         httpSecurity
             .httpBasic().disable()
             .csrf().disable()
+            .authorizeRequests()
+            .antMatchers("/user/save").permitAll()
+            .and().csrf().disable().authorizeRequests()
+            .antMatchers("/auth/login").permitAll()
+            .and()
+            //TODO не дает токен. Нужно настроить
+
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//            .and()
-//            .authorizeRequests()
-//            .antMatchers(loginEndpoint).permitAll()
-//            .antMatchers(adminEndpoint).permitAll()
-//            .anyRequest().authenticated()
+            .and()
+            .authorizeRequests()
+            .anyRequest().authenticated()
             .and()
             .apply(JwtConfigure(jwtTokenProvider))
     }

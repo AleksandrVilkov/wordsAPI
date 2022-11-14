@@ -14,7 +14,6 @@ class Cron {
         val fileWriter = FileWriter("temp/logs/log.log", false)
         val bufferWriter = BufferedWriter(fileWriter)
         bufferWriter.write("")
-        println("cron")
         bufferWriter.close()
     }
 }

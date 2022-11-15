@@ -15,11 +15,48 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 @RunWith(SpringRunner::class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser
 class Test {
     @Autowired
     private var mvc: MockMvc? = null
 
     private lateinit var token: String
+
+
+    @Test
+    fun testStartGameEndpoint() {
+
+    }
+
+    @Test
+    fun testTryCheckEndpoint() {
+
+    }
+
+    @Test
+    fun testGetAllHistoryEndpoint() {
+
+    }
+
+    @Test
+    fun testSaveDefeatEndpoint() {
+
+    }
+
+    @Test
+    fun testMakeAttemptEndpoint() {
+
+    }
+
+    @Test
+    fun testCheckUserEndpoint() {
+
+    }
+
+    @Test
+    fun testSaveUserEndpoint() {
+
+    }
 
     @Test
     @WithMockUser

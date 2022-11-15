@@ -104,7 +104,6 @@ class AuthTest {
         val body = "{\"login\":\"$login\", \"pass\":\"$pass\"}"
         mvc?.perform(
             MockMvcRequestBuilders.post(authLoginUrl.toString()).content(body).contentType(MediaType.APPLICATION_JSON)
-
         )?.andExpect(status().isOk)
     }
 }

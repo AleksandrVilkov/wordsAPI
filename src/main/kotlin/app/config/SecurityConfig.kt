@@ -17,11 +17,7 @@ import org.springframework.web.server.ServerWebExchange
 @Configuration
 class SecurityConfig(
     @Autowired
-    val jwtTokenProvider: JwtTokenProvider,
-    @Value("\${admin.endpoint}")
-    val adminEndpoint: String,
-    @Value("\${login.endpoint}")
-    val loginEndpoint: String
+    val jwtTokenProvider: JwtTokenProvider
 ) : WebSecurityConfigurerAdapter() {
 
     @Bean
@@ -34,12 +30,8 @@ class SecurityConfig(
         httpSecurity
             .httpBasic().disable()
             .csrf().disable()
-            .formLogin().disable()//Отключение формы логина
-            .authenticationManager(authenticationManagerBean())
             .authorizeRequests()
             .antMatchers("/user/save").permitAll()
-            .and().csrf().disable().authorizeRequests()
-            .antMatchers("/auth/login").permitAll()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()

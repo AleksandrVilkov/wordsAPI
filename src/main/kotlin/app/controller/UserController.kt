@@ -1,5 +1,6 @@
 package app.controller
 
+import app.dto.MessageDto
 import app.dto.UserDto
 import app.model.enumCollectilos.UserRole
 import app.model.enumCollectilos.UserStatus
@@ -21,28 +22,25 @@ class UserController(
 
     @GetMapping("/check")
     fun checkUser(@RequestParam login: String): ResponseEntity<Any> {
-        val msgs = mutableListOf<Message>()
+        val msgs = mutableListOf<MessageDto>()
         val user = userService.findUser(login, msgs)
         return if (user != null && msgs.isEmpty()) {
-            ResponseEntity.ok(
-                UserDto(
-                    login = user.login,
-                    created = user.created.toString(),
-                    status = user.status.toString(),
-                    role = user.role.toString()
-                )
-            )
+            ResponseEntity.ok(user)
         } else {
-            return ResponseEntity.status(406).build()
+            ResponseEntity.status(406).build()
         }
     }
 
     @GetMapping("/save")
     fun saveUser(@RequestParam login: String, @RequestParam pass: String): ResponseEntity<Any> {
-        val msgs = mutableListOf<Message>()
+        val msgs = mutableListOf<MessageDto>()
         userService.registerUser(
-            User(
-                login = login, pass = pass, role = UserRole.USER, status = UserStatus.ACTIVE, created = LocalDate.now()
+            UserDto(
+                login = login,
+                pass = pass,
+                role = UserRole.USER.name,
+                status = UserStatus.ACTIVE.name,
+                created = LocalDate.now().toString()
             ), msgs
         )
         if (msgs.isEmpty()) {

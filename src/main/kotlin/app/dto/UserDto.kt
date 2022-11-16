@@ -1,10 +1,8 @@
 package app.dto
 
 import app.entity.UserEntity
-import app.entity.toDto
 
 class UserDto(
-    val id: Int,
     val created: String,
     val role: String,
     val status: String,

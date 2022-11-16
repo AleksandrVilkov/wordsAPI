@@ -1,7 +1,7 @@
 package app.controller
 
 import app.dto.AuthRequestDto
-import model.Entity.Message
+import app.dto.MessageDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import app.security.jwt.JwtTokenProvider
+import model.defineUserRole
 
 @RestController
 @RequestMapping("/auth")
@@ -30,12 +31,12 @@ class AuthController(
         try {
             val login = authRequest.login
             authManager.authenticate(UsernamePasswordAuthenticationToken(login, authRequest.pass))
-            val msgs = mutableListOf<Message>()
+            val msgs = mutableListOf<MessageDto>()
             val user = userService.findUser(login, msgs) ?: throw Exception("User not found")
             if (!BCrypt.checkpw(authRequest.pass, user.pass)) {
                 throw BadCredentialsException(("Invalid password"))
             }
-            val token = jwtTokenProvider.createToken(login, mutableListOf(user.role))
+            val token = jwtTokenProvider.createToken(login, mutableListOf(defineUserRole(user.role)))
             val response = mutableMapOf<String, String>()
             response["login"] = login
             response["token"] = token

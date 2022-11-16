@@ -13,7 +13,7 @@ class GameEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0,
     val created: String = "",
-    val userId: String = "",
+    val userId: Int,
     var updated: String = "",
     var status: String = "",
     var time: String = "",

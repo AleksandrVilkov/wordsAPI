@@ -3,15 +3,15 @@ package app.dto
 import app.entity.GameEntity
 
 data class GameDto(
-    val id: Int,
+    val id: Int = 0,
     val created: String,
-    val userId: String,
+    val userId: Int,
     var status: String,
     val countLettersInHiddenWord: Int,
-    var hiddenWord: String,
+    var hiddenWord: String = "",
     var countAttempts: Int,
-    var updated: String,
-    var attemptWords: MutableList<String>
+    var updated: String = "",
+    var attemptWords: MutableList<String> = mutableListOf()
 )
 
 fun GameDto.toEntity(): GameEntity = GameEntity(

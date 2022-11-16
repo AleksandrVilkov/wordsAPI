@@ -1,8 +1,8 @@
 package app.controller
 
+import app.dto.GameDto
+import app.dto.MessageDto
 import app.model.enumCollectilos.GameStatus
-import model.Entity.Game
-import model.Entity.Message
 import org.springframework.beans.factory.annotation.Value
 
 fun checkCount(
@@ -15,25 +15,24 @@ fun checkCount(
     return count in min..max
 }
 
-fun getDescription(msgs: List<Message>): String {
+fun getDescription(msgs: List<MessageDto>): String {
     var description = ""
     for (msg in msgs) {
-        description += "${msg.textMessage}; "
+        description += "${msg.messageTest}; "
     }
     return description
 }
 
-fun canStartGame(games: List<Game>, msgs: MutableList<Message>): Boolean {
+fun canStartGame(games: List<GameDto>, msgs: MutableList<MessageDto>): Boolean {
     var count = 0
     for (game in games) {
         if (game.status.equals(GameStatus.IN_GAME)) {
             msgs.add(
-                Message(
+                MessageDto(
                     "Уже существует игра в статусе ${GameStatus.IN_GAME}: " +
-                            "uid: ${game.uid}," +
+                            "id: ${game.id}," +
                             " создана: ${game.created}, " +
-                            "загаданное слово: ${game.hiddenWord}",
-                    ""
+                            "загаданное слово: ${game.hiddenWord}"
                 )
             )
             count++

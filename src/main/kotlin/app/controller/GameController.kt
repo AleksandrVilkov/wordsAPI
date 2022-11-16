@@ -2,12 +2,9 @@ package app.controller
 
 import app.dto.GameDto
 import app.dto.MessageDto
-import app.dto.WordDto
+import app.dto.toEntity
 import app.model.enumCollectilos.GameStatus
 import app.model.enumCollectilos.LetterStatus
-import model.Entity.Game
-import model.Entity.Message
-import model.isEmptyString
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
@@ -28,92 +25,75 @@ class GameController(
 ) {
 
     @GetMapping("/start")
-    fun startGame(@RequestParam userUid: String, @RequestParam countLettersInWord: Int): ResponseEntity<Any> {
-        val msgs = mutableListOf<Message>()
-        val userGames = gameService.readUserGames(userUid, msgs)
+    fun startGame(@RequestParam userId: Int, @RequestParam countLettersInWord: Int): ResponseEntity<Any> {
+        val msgs = mutableListOf<MessageDto>()
+        val userGames = gameService.readUserGames(userId, msgs)
         if (!canStartGame(userGames, msgs)) {
             return ResponseEntity.status(406).build()
         }
         val game = GameDto(
-            userUid = userUid,
+            userId = userId,
             status = GameStatus.IN_GAME.name,
             countLettersInHiddenWord = countLettersInWord,
-            created = LocalDate.now().toString()
+            created = LocalDate.now().toString(),
+            countAttempts = 0
         )
         val result = gameService.createGame(game, msgs)
-        if (result != null || msgs.isEmpty()) {
-            return ResponseEntity.ok(result?.let {
-                val gameDto = GameDto(
-                    uid = it.uid,
-                    created = result.created.toString(),
-                    userUid = result.userUid,
-                    status = result.status.name,
-                    hiddenWord = result.hiddenWord
-                )
-                gameDto
-            })
+        if (msgs.isEmpty()) {
+            return ResponseEntity.ok(result)
         }
-        return ResponseEntity.ok(MessageDto())
+        return ResponseEntity.ok(MessageDto("Error start"))
     }
 
     @GetMapping("/check")
     fun tryCheck(@RequestParam word: String): ResponseEntity<Any> {
-        val msg = mutableListOf<Message>()
+        val msg = mutableListOf<MessageDto>()
         val foundWord = wordService.findWord(value = word, msg)
             ?: return ResponseEntity.status(406).build()
 
-        return ResponseEntity.ok(WordDto(value = foundWord.wordValue))
+        return ResponseEntity.ok(foundWord)
     }
 
 
     @GetMapping("/history")
-    fun getAllHistory(@RequestParam userUid: String): ResponseEntity<Any> {
-        val msgs = mutableListOf<Message>()
+    fun getAllHistory(@RequestParam userId: Int): ResponseEntity<Any> {
+        val msgs = mutableListOf<MessageDto>()
 
-        if (isEmptyString(userUid))
-            msgs.add(Message("userUID is empty", ""))
+        if (userId == 0)
+            msgs.add(MessageDto("userUID is empty"))
 
-        val userGames = gameService.readUserGames(userUid, msgs)
+        val userGames = gameService.readUserGames(userId, msgs)
         if (msgs.isNotEmpty()) {
             return ResponseEntity.status(406).build()
         }
-        val result = mutableListOf<GameDto>()
-        for (userGame in userGames) {
-            result.add(
-                GameDto(
-                    uid = userGame.uid,
-                    created = userGame.created.toString(),
-                    userUid = userGame.userUid,
-                    status = userGame.status.name,
-                    hiddenWord = userGame.hiddenWord
-                )
-            )
+        val result = userGames.map {
+            it.toEntity()
         }
         return ResponseEntity.ok(result)
     }
 
     @GetMapping("/save/win")
-    fun saveDefeat(@RequestParam userUid: String, @RequestParam gameUid: String): ResponseEntity<String> {
-        val msgs = mutableListOf<Message>()
-        val game = gameService.foundUserGameInGame(userUid = userUid, gameUid = gameUid, msgs)
+    fun saveDefeat(@RequestParam userId: Int, @RequestParam gameId: Int): ResponseEntity<String> {
+        val msgs = mutableListOf<MessageDto>()
+        val game = gameService.foundUserGameInGame(userId = userId, gameId = gameId, msgs)
             ?: return ResponseEntity.ok("Game with status IN GAME not found")
-        game.status = GameStatus.FINISHED
+        game.status = GameStatus.FINISHED.name
         gameService.updateGames(game, msgs)
         return ResponseEntity.ok("win save")
     }
 
     @GetMapping("/attempt")
     fun makeAttempt(
-        @RequestParam userUid: String,
-        @RequestParam gameUid: String,
+        @RequestParam userId: Int,
+        @RequestParam gameId: Int,
         @RequestParam attemptWord: String
     ): ResponseEntity<MutableMap<String, LetterStatus>>? {
-        val msgs = mutableListOf<Message>()
+        val msgs = mutableListOf<MessageDto>()
         val result = mutableMapOf<String, LetterStatus>()
         gameService.attemptResult(
             attemptWord = attemptWord,
-            userUid = userUid,
-            gameUid = gameUid,
+            userId = userId,
+            gameId = gameId,
             msgs = msgs,
             result = result
         )

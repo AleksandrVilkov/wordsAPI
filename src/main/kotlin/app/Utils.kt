@@ -1,18 +1,9 @@
 package model
 
-import app.dto.GameDto
-import app.dto.UserDto
-import app.dto.WordDto
-import app.entity.GameEntity
-import app.entity.UserEntity
-import app.entity.WordEntity
 import app.model.enumCollectilos.GameStatus
 import app.model.enumCollectilos.UserRole
 import app.model.enumCollectilos.UserStatus
-import org.apache.commons.codec.binary.Base64
 import org.springframework.security.crypto.bcrypt.BCrypt
-import kotlin.math.log
-
 
 fun encode(pass: String): String {
     return BCrypt.hashpw(pass, BCrypt.gensalt())

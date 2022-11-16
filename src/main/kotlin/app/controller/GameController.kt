@@ -1,9 +1,8 @@
 package app.controller
 
-import app.controller.entityVO.GameVO
-import app.controller.entityVO.Response
-import app.controller.entityVO.Status
-import app.controller.entityVO.WordVO
+import app.dto.GameDto
+import app.dto.MessageDto
+import app.dto.WordDto
 import app.model.enumCollectilos.GameStatus
 import app.model.enumCollectilos.LetterStatus
 import model.Entity.Game
@@ -43,18 +42,18 @@ class GameController(
         )
         val result = gameService.createGame(game, msgs)
         if (result != null || msgs.isEmpty()) {
-            return ResponseEntity.ok(Response(Status.OK, "", result?.let {
-                val gameVO = GameVO(
+            return ResponseEntity.ok(result?.let {
+                val gameDto = GameDto(
                     uid = it.uid,
                     created = result.created.toString(),
                     userUid = result.userUid,
                     status = result.status.name,
                     hiddenWord = result.hiddenWord
                 )
-                gameVO
-            }))
+                gameDto
+            })
         }
-        return ResponseEntity.ok(Response(Status.ERROR, getDescription(msgs)))
+        return ResponseEntity.ok(MessageDto())
     }
 
     @GetMapping("/check")
@@ -63,7 +62,7 @@ class GameController(
         val foundWord = wordService.findWord(value = word, msg)
             ?: return ResponseEntity.status(406).build()
 
-        return ResponseEntity.ok(WordVO(value = foundWord.wordValue))
+        return ResponseEntity.ok(WordDto(value = foundWord.wordValue))
     }
 
 
@@ -78,10 +77,10 @@ class GameController(
         if (msgs.isNotEmpty()) {
             return ResponseEntity.status(406).build()
         }
-        val result = mutableListOf<GameVO>()
+        val result = mutableListOf<GameDto>()
         for (userGame in userGames) {
             result.add(
-                GameVO(
+                GameDto(
                     uid = userGame.uid,
                     created = userGame.created.toString(),
                     userUid = userGame.userUid,

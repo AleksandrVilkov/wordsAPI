@@ -1,13 +1,10 @@
 package app.controller
 
-import app.controller.entityVO.Response
-import app.controller.entityVO.Status
-import app.controller.entityVO.UserVO
+import app.dto.UserDto
 import app.model.enumCollectilos.UserRole
 import app.model.enumCollectilos.UserStatus
 import model.Entity.Message
 import model.Entity.User
-import org.apache.catalina.filters.AddDefaultCharsetFilter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
@@ -21,8 +18,7 @@ import java.time.LocalDate
 @RestController
 @RequestMapping("/user")
 class UserController(
-    @Autowired
-    val userService: UserServiceInterface
+    @Autowired val userService: UserServiceInterface
 ) {
 
     @GetMapping("/check")
@@ -31,7 +27,7 @@ class UserController(
         val user = userService.findUser(login, msgs)
         return if (user != null && msgs.isEmpty()) {
             ResponseEntity.ok(
-                UserVO(
+                UserDto(
                     login = user.login,
                     created = user.created.toString(),
                     status = user.status.toString(),
@@ -48,11 +44,7 @@ class UserController(
         val msgs = mutableListOf<Message>()
         userService.registerUser(
             User(
-                login = login,
-                pass = pass,
-                role = UserRole.USER,
-                status = UserStatus.ACTIVE,
-                created = LocalDate.now()
+                login = login, pass = pass, role = UserRole.USER, status = UserStatus.ACTIVE, created = LocalDate.now()
             ), msgs
         )
         if (msgs.isEmpty()) {

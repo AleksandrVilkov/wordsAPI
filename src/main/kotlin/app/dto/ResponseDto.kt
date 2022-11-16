@@ -1,8 +1,7 @@
-package app.controller.entityVO
+package app.dto
 
-
-data class Response(
+data class ResponseDto (
     val status: Status,
     val description: String,
     val data: EntityVO? = null
-)
+        )

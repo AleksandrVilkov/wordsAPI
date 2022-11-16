@@ -1,6 +1,6 @@
 package app.controller
 
-import app.controller.entityVO.AuthRequest
+import app.dto.AuthRequestDto
 import model.Entity.Message
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -26,13 +26,13 @@ class AuthController(
 ) {
 
     @PostMapping("/login")
-    fun login(@RequestBody authRequest: AuthRequest): ResponseEntity<MutableMap<String, String>> {
+    fun login(@RequestBody authRequest: AuthRequestDto): ResponseEntity<MutableMap<String, String>> {
         try {
             val login = authRequest.login
             authManager.authenticate(UsernamePasswordAuthenticationToken(login, authRequest.pass))
             val msgs = mutableListOf<Message>()
             val user = userService.findUser(login, msgs) ?: throw Exception("User not found")
-            if(!BCrypt.checkpw(authRequest.pass, user.pass)) {
+            if (!BCrypt.checkpw(authRequest.pass, user.pass)) {
                 throw BadCredentialsException(("Invalid password"))
             }
             val token = jwtTokenProvider.createToken(login, mutableListOf(user.role))

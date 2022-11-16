@@ -45,8 +45,7 @@ class AuthTest {
     private val authLoginUrl: String? = null
 
     init {
-        val dateNow = Date()
-        println("$dateNow Start test authorization request checks")
+        println("${Date()} Start test authorization request checks")
     }
 
     @Test

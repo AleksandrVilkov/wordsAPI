@@ -2,71 +2,51 @@ package app.model.service
 
 import app.controller.GameServiceInterface
 import app.controller.WordServiceInterface
+import app.dto.GameDto
+import app.dto.MessageDto
+import app.dto.toEntity
+import app.entity.toDto
 import app.logger.Logger
 import app.model.enumCollectilos.GameStatus
 import app.model.enumCollectilos.LetterStatus
-import model.Entity.Game
-import model.Entity.Message
+import app.repository.GameRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
 @Service
 class GameServiceImpl(
-    @Autowired
-    private val dbConnector: DataBaseConnector,
-    private val wordService: WordServiceInterface,
+    @Autowired private val gameRepository: GameRepository,
+    @Autowired private val wordService: WordServiceInterface,
 ) : GameServiceInterface {
     val logger = Logger("GameServiceImpl")
 
-    override fun createGame(game: Game, msgs: MutableList<Message>): Game? {
+    override fun createGame(game: GameDto, msgs: MutableList<MessageDto>): GameDto {
         val word = wordService.findRandomWord(game.countLettersInHiddenWord, msgs)
         game.hiddenWord = word?.wordValue.toString()
         if (game.hiddenWord.isEmpty()) {
             val messageTest = "Ошибка получения случайного слова длинной ${game.countLettersInHiddenWord}"
             msgs.add(
-                Message(messageTest, "")
+                MessageDto(messageTest)
             )
             logger.debug(messageTest)
-            game.status = GameStatus.ERROR
+            game.status = GameStatus.ERROR.name
         }
-        return if (dbConnector.save(game)) {
-            game
-        } else {
-            val text = "Не удалось создать игру для пользователя  ${game.userUid}"
-            msgs.add(Message(text, ""))
-            logger.debug(text)
-            null
-        }
+        gameRepository.save(game.toEntity())
+        return game
     }
 
-    override fun foundUserGameInGame(userUid: String, gameUid: String, msgs: MutableList<Message>): Game? {
-        val result = dbConnector.read(dbConnector.getProperties().getProperty("gamesTable"), "uid", "'$gameUid'")
-        val games = mutableListOf<Game>()
-        while (result.next()) {
-            val gameStatus = defineGameStatus(result.getString("status"))
-            val userUidFromGame = result.getString("useruid")
-            if (gameStatus.equals(GameStatus.IN_GAME) && userUidFromGame.equals(userUid)) {
-                games.add(
-                    Game(
-                        uid = result.getString("uid"),
-                        created = LocalDate.parse(result.getString("created")),
-                        userUid = userUidFromGame,
-                        updated = LocalDate.parse(result.getString("updated")),
-                        status = gameStatus,
-                        time = result.getString("time"),
-                        hiddenWord = result.getString("hiddenWord"),
-                        countLettersInHiddenWord = result.getString("hiddenWord").length,
-                        attemptWords = getAttemptWordsFromString(result.getString("attemptWords")),
-                        countAttempts = result.getInt("countAttempts")
-                    )
-                )
-            }
+    override fun foundUserGameInGame(userId: Int, gameId: Int, msgs: MutableList<MessageDto>): GameDto? {
+        val gamesEntity = gameRepository.findByUserId(userId)
+        val result = mutableListOf<GameDto>()
+        for (game in gamesEntity) {
+            if (game.status.equals(GameStatus.IN_GAME.name)) result.add(game.toDto())
         }
-        if (games.size != 1) {
-            msgs.add(Message("Ошибка получения игры. Найдено более 1 игры в статусе \"В игре\"", ""))
+
+        if (result.size != 1) {
+            msgs.add(MessageDto("Ошибка получения игры. Найдено более 1 игры в статусе \"В игре\""))
             return null
-        } else return games[0]
+        } else return result[0]
     }
 
     private fun getAttemptWordsFromString(string: String): MutableList<String> {
@@ -78,19 +58,16 @@ class GameServiceImpl(
         return result
     }
 
-
-    //возможно будет нужна мапа позиция буквы - мапа буква статус
     override fun attemptResult(
-        userUid: String,
-        gameUid: String,
+        userId: Int,
+        gameId: Int,
         attemptWord: String,
-        msgs: MutableList<Message>,
+        msgs: MutableList<MessageDto>,
         result: MutableMap<String, LetterStatus>
     ) {
         if (wordService.findWord(attemptWord, msgs) != null) {
-            val userGame = foundUserGameInGame(userUid, gameUid, msgs) ?: throw RuntimeException("Game not found")
-            if (userGame.hiddenWord.length != attemptWord.length)
-                throw RuntimeException("Word length does not match")
+            val userGame = foundUserGameInGame(userId, gameId, msgs) ?: throw RuntimeException("Game not found")
+            if (userGame.hiddenWord.length != attemptWord.length) throw RuntimeException("Word length does not match")
             val attemptArray = attemptWord.toCharArray()
             for (attemptLetter in attemptArray) {
                 if (!userGame.hiddenWord.contains(attemptLetter.lowercase())) {
@@ -99,58 +76,29 @@ class GameServiceImpl(
                     val hiddenIndex = userGame.hiddenWord.indexOf(attemptLetter)
                     val attemptIndex = attemptWord.indexOf(attemptLetter)
                     val status: LetterStatus
-                    if (hiddenIndex == attemptIndex)
-                        status = LetterStatus.GUESSED
+                    if (hiddenIndex == attemptIndex) status = LetterStatus.GUESSED
                     else status = LetterStatus.IS_ELSEWHERE
                     result[attemptLetter.toString()] = status
                 }
             }
             userGame.countAttempts += 1
-            userGame.updated = LocalDate.now()
+            userGame.updated = LocalDate.now().toString()
             userGame.attemptWords.add(attemptWord)
             updateGames(game = userGame, msgs = msgs)
         }
 
     }
 
-    override fun readUserGames(userUid: String, msgs: MutableList<Message>): List<Game> {
-        val result = dbConnector.read(dbConnector.getProperties().getProperty("gamesTable"), "useruid", "'$userUid'")
-        val games = mutableListOf<Game>()
-        while (result.next()) {
-            games.add(
-                Game(
-                    created = LocalDate.parse(result.getString("created")),
-                    userUid = result.getString("useruid"),
-                    updated = LocalDate.parse(result.getString("updated")),
-                    status = defineGameStatus(result.getString("status")),
-                    time = result.getString("time"),
-                    hiddenWord = result.getString("hiddenWord"),
-                    countLettersInHiddenWord = result.getString("hiddenWord").length,
-                    countAttempts = result.getInt("countAttempts")
-                )
-            )
+    override fun readUserGames(userId: Int, msgs: MutableList<MessageDto>): List<GameDto> {
+        val result = gameRepository.findByUserId(userId)
+        val games = mutableListOf<GameDto>()
+        return result.map {
+            it.toDto()
         }
-        return games
     }
 
-    override fun updateGames(game: Game, msgs: MutableList<Message>): Boolean {
-        val tableName = dbConnector.getProperties().getProperty("gamesTable")
-        val values = mapOf<String, String>(
-            "status" to game.status.name,
-            "countattempts" to game.countAttempts.toString(),
-            "updated" to LocalDate.now().toString()
-        )
-        return dbConnector.update(tableName = tableName, paramsValue = values, uidObject = game.uid)
-    }
-
-
-    private fun defineGameStatus(statusString: String): GameStatus {
-        return when (statusString) {
-            GameStatus.IN_GAME.name -> GameStatus.IN_GAME
-            GameStatus.NOT_IN_GAME.name -> GameStatus.NOT_IN_GAME
-            GameStatus.ERROR.name -> GameStatus.ERROR
-            GameStatus.FINISHED.name -> GameStatus.FINISHED
-            else -> GameStatus.NOT_DETERMINED
-        }
+    override fun updateGames(game: GameDto, msgs: MutableList<MessageDto>): Boolean {
+        //TODO implements
+        return false;
     }
 }

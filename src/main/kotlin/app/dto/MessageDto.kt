@@ -1,4 +1,5 @@
 package app.dto
 
-class MessageDto {
-}
+data class MessageDto(
+    val messageTest: String
+)

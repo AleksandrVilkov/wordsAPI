@@ -1,11 +1,11 @@
 package app.controller
 
-import model.Entity.Message
-import model.Entity.User
+import app.dto.MessageDto
+import app.dto.UserDto
 
 interface UserServiceInterface {
-    fun registerUser(user: User, msgs: MutableList<Message>): Boolean
-    fun findUser(login: String, msgs: MutableList<Message>): User?
-    fun deleteUser(login: String, msgs: MutableList<Message>): Boolean
-    fun getAllUsers(msgs: MutableList<Message>): List<User>
+    fun registerUser(user: UserDto, msgs: MutableList<MessageDto>): Boolean
+    fun findUser(login: String, msgs: MutableList<MessageDto>): UserDto?
+    fun deleteUser(login: String, msgs: MutableList<MessageDto>): Boolean
+    fun getAllUsers(msgs: MutableList<MessageDto>): List<UserDto>
 }

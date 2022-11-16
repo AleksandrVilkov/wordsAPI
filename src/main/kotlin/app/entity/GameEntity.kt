@@ -1,5 +1,6 @@
 package app.entity
 
+import app.dto.GameDto
 import app.model.enumCollectilos.GameStatus
 import java.time.LocalDate
 import java.util.*
@@ -10,7 +11,7 @@ import javax.persistence.*
 class GameEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val uid: Int = 0,
+    val id: Int = 0,
     val created: String = "",
     val userId: String = "",
     var updated: String = "",
@@ -20,4 +21,14 @@ class GameEntity(
     var countLettersInHiddenWord: Int = 0,
     var countAttempts: Int = 0,
     val attemptWords: String = ""
+)
+
+fun GameEntity.toDto():GameDto = GameDto(
+    id = this.id,
+    created = this.created,
+    userId = this.userId,
+    status = this.status,
+    countLettersInHiddenWord = this.countLettersInHiddenWord,
+    hiddenWord = this.hiddenWord,
+    countAttempts = this.countAttempts
 )

@@ -3,8 +3,6 @@ package app.controller
 import app.dto.UserDto
 import app.model.enumCollectilos.UserRole
 import app.model.enumCollectilos.UserStatus
-import model.Entity.Message
-import model.Entity.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component

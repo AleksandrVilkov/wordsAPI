@@ -1,5 +1,6 @@
 package app.entity
 
+import app.dto.WordDto
 import java.util.*
 import javax.persistence.*
 
@@ -10,5 +11,9 @@ class WordEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0,
     val wordValue: String = "",
-    val countLetters: String = "",
+    val countLetters: Int = 0,
+)
+
+fun WordEntity.toDto(): WordDto = WordDto(
+    value = this.wordValue
 )

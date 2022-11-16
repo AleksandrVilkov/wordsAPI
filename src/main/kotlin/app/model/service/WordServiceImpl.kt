@@ -1,9 +1,12 @@
 package app.model.service
 
 import app.controller.WordServiceInterface
+import app.dto.MessageDto
+import app.dto.WordDto
+import app.dto.toEntity
+import app.entity.toDto
 import app.logger.Logger
-import model.Entity.Message
-import model.Entity.Word
+import app.repository.WordRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import kotlin.random.Random
@@ -12,50 +15,37 @@ import kotlin.random.Random
 @Service
 class WordServiceImpl(
     @Autowired
-    private val connector: DataBaseConnector
+    private val wordRepository: WordRepository
 ) : WordServiceInterface {
     val logger = Logger("WordServiceImpl")
-    override fun createWord(word: Word, msgs: MutableList<Message>) {
-        if (!connector.save(word))
-            msgs.add(Message("Не удалось сохранить слово ${word.wordValue} в базу данных", ""))
+    override fun createWord(word: WordDto, msgs: MutableList<MessageDto>) {
+        val res = wordRepository.save(word.toEntity())
     }
 
-    override fun findRandomWord(countLetters: Int, msgs: MutableList<Message>): Word? {
-        val result =
-            connector.read(
-                connector.getProperties().getProperty("wordsTable"),
-                "countletters",
-                "$countLetters"
-            )
-        val wordList = mutableListOf<Word>()
-        while (result.next()) {
-            wordList.add(Word(result.getString("uid"), result.getString("value"), result.getString("countletters")))
+    override fun findRandomWord(countLetters: Int, msgs: MutableList<MessageDto>): WordDto? {
+        val result = wordRepository.findByCountletters(countLetters)
+        val wordList = result.map {
+            it.toDto()
         }
         if (wordList.isEmpty()) {
             val msgText = "Получен пустой список слов"
-            msgs.add(Message(msgText, ""))
+            msgs.add(MessageDto(msgText))
             logger.debug(msgText)
             return null
         }
         return wordList[Random.nextInt(0, wordList.size)]
     }
 
-    override fun findWord(value: String, msgs: MutableList<Message>): Word? {
-        val result =
-            connector.read(
-                connector.getProperties().getProperty("wordsTable"),
-                "value",
-                "'${value.lowercase()}'"
-            )
+    override fun findWord(value: String, msgs: MutableList<MessageDto>): WordDto? {
+        val result = wordRepository.findByValue(value)
 
-        val wordList = mutableListOf<Word>()
-        while (result.next()) {
-            wordList.add(Word(result.getString("uid"), result.getString("value"), result.getString("countletters")))
+        val wordList = result.map {
+            it.toDto()
         }
         if (wordList.size != 1) {
             val messageText = "Найдено некоректное количество слов -  ${wordList.size}.  Ожидалось 1.  " +
                     "Искомое слово -  $value"
-            msgs.add(Message(messageText, ""))
+            msgs.add(MessageDto(messageText))
             logger.debug(messageText)
             return null
         }

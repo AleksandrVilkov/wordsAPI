@@ -1,10 +1,10 @@
 package app.controller
 
-import model.Entity.Message
-import model.Entity.Word
+import app.dto.MessageDto
+import app.dto.WordDto
 
 interface WordServiceInterface {
-    fun createWord(word: Word, msgs: MutableList<Message>)
-    fun findRandomWord(countLetters: Int, msgs: MutableList<Message>): Word?
-    fun findWord(value: String, msgs: MutableList<Message>): Word?
+    fun createWord(word: WordDto, msgs: MutableList<MessageDto>)
+    fun findRandomWord(countLetters: Int, msgs: MutableList<MessageDto>): WordDto?
+    fun findWord(value: String, msgs: MutableList<MessageDto>): WordDto?
 }

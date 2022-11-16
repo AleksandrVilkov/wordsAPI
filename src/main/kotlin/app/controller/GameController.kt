@@ -34,11 +34,11 @@ class GameController(
         if (!canStartGame(userGames, msgs)) {
             return ResponseEntity.status(406).build()
         }
-        val game = Game(
+        val game = GameDto(
             userUid = userUid,
-            status = GameStatus.IN_GAME,
+            status = GameStatus.IN_GAME.name,
             countLettersInHiddenWord = countLettersInWord,
-            created = LocalDate.now()
+            created = LocalDate.now().toString()
         )
         val result = gameService.createGame(game, msgs)
         if (result != null || msgs.isEmpty()) {

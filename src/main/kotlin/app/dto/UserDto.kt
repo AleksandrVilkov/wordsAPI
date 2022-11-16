@@ -3,6 +3,7 @@ package app.dto
 import app.entity.UserEntity
 
 class UserDto(
+    val id: Int,
     val created: String,
     val role: String,
     val status: String,

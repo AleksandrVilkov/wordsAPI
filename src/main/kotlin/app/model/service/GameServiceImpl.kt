@@ -23,7 +23,7 @@ class GameServiceImpl(
 
     override fun createGame(game: GameDto, msgs: MutableList<MessageDto>): GameDto {
         val word = wordService.findRandomWord(game.countLettersInHiddenWord, msgs)
-        game.hiddenWord = word?.wordValue.toString()
+        game.hiddenWord = word?.value.toString()
         if (game.hiddenWord.isEmpty()) {
             val messageTest = "Ошибка получения случайного слова длинной ${game.countLettersInHiddenWord}"
             msgs.add(

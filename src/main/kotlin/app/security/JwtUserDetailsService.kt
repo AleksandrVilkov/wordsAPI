@@ -3,6 +3,7 @@ package app.security
 import app.controller.UserServiceInterface
 import app.controller.getDescription
 import app.dto.MessageDto
+import app.dto.toEntity
 import app.logger.Logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
@@ -23,7 +24,7 @@ class JwtUserDetailsService(
         if (msgs.isNotEmpty()) {
             throw UsernameNotFoundException(getDescription(msgs))
         }
-        val jwtUser = jwtUserFactory(user)
+        val jwtUser = jwtUserFactory(user.toEntity())
         logger.debug("user with login ${jwtUser.login} successfully loaded")
         return jwtUser
 

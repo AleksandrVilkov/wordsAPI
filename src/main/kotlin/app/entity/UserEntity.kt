@@ -22,6 +22,7 @@ class UserEntity(
 )
 
 fun UserEntity.toDto(): UserDto = UserDto(
+    id = this.id,
     created = this.created,
     role = this.role,
     status = this.status,

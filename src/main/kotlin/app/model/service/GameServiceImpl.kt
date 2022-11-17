@@ -16,8 +16,10 @@ import java.time.LocalDate
 
 @Service
 class GameServiceImpl(
-    @Autowired private val gameRepository: GameRepository,
-    @Autowired private val wordService: WordServiceInterface,
+    @Autowired
+    private val gameRepository: GameRepository,
+    @Autowired
+    private val wordService: WordServiceInterface,
 ) : GameServiceInterface {
     val logger = Logger("GameServiceImpl")
 

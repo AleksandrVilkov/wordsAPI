@@ -33,14 +33,13 @@ class UserController(
 
     @GetMapping("/save")
     fun saveUser(
-        @RequestParam userId: Int,
         @RequestParam login: String,
         @RequestParam pass: String
     ): ResponseEntity<Any> {
         val msgs = mutableListOf<MessageDto>()
         userService.registerUser(
             UserDto(
-                id = userId,
+                id = 463454,
                 login = login,
                 pass = pass,
                 role = UserRole.USER.name,

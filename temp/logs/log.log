@@ -1,3 +1,1 @@
-DEBUG: PSQLConnector Tue Nov 15 17:04:35 MSK 2022 sending query SELECT * FROM users WHERE login = 'test'; to PSQL
-DEBUG: PSQLConnector Tue Nov 15 17:04:35 MSK 2022 SELECT * FROM users WHERE login = 'test';
-DEBUG: UserServiceImpl Tue Nov 15 17:04:35 MSK 2022 Пользователь не создан, так как уже существует
+DEBUG: UserServiceImpl Wed Nov 16 22:32:08 MSK 2022 User not found or too many found

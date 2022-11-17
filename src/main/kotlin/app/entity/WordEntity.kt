@@ -1,14 +1,13 @@
 package app.entity
 
 import app.dto.WordDto
-import java.util.*
 import javax.persistence.*
 
 @Entity
 @Table(name = "words")
 class WordEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     val id: Int = 0,
     val wordValue: String = "",
     val countLetters: Int = 0,

@@ -1,9 +1,6 @@
 package app.entity
 
 import app.dto.GameDto
-import app.model.enumCollectilos.GameStatus
-import java.time.LocalDate
-import java.util.*
 import javax.persistence.*
 
 @Entity

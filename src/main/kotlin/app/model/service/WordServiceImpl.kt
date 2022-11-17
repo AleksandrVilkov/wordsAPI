@@ -23,7 +23,7 @@ class WordServiceImpl(
     }
 
     override fun findRandomWord(countLetters: Int, msgs: MutableList<MessageDto>): WordDto? {
-        val result = wordRepository.findByCountletters(countLetters)
+        val result = wordRepository.findByCountLetters(countLetters)
         val wordList = result.map {
             it.toDto()
         }
@@ -37,7 +37,7 @@ class WordServiceImpl(
     }
 
     override fun findWord(value: String, msgs: MutableList<MessageDto>): WordDto? {
-        val result = wordRepository.findByValue(value)
+        val result = wordRepository.findByWordValue(value)
 
         val wordList = result.map {
             it.toDto()

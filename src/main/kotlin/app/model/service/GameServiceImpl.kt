@@ -91,9 +91,8 @@ class GameServiceImpl(
 
     }
 
-    override fun readUserGames(userId: Int, msgs: MutableList<MessageDto>): List<GameDto> {
+    override fun readUserGames(userId: Int): List<GameDto> {
         val result = gameRepository.findByUserId(userId)
-        val games = mutableListOf<GameDto>()
         return result.map {
             it.toDto()
         }

@@ -15,6 +15,6 @@ interface GameServiceInterface {
         result: MutableMap<String, LetterStatus>
     )
 
-    fun readUserGames(userId: Int, msgs: MutableList<MessageDto>): List<GameDto>
+    fun readUserGames(userId: Int): List<GameDto>
     fun updateGames(game: GameDto, msgs: MutableList<MessageDto>): Boolean
 }

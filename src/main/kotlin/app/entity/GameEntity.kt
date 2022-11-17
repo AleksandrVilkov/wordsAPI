@@ -10,7 +10,7 @@ class GameEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0,
     val created: String = "",
-    val userId: Int,
+    val userId: Int = 0,
     var updated: String = "",
     var status: String = "",
     var time: String = "",
@@ -20,7 +20,7 @@ class GameEntity(
     val attemptWords: String = ""
 )
 
-fun GameEntity.toDto():GameDto = GameDto(
+fun GameEntity.toDto(): GameDto = GameDto(
     id = this.id,
     created = this.created,
     userId = this.userId,

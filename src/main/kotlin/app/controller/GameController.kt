@@ -27,7 +27,7 @@ class GameController(
     @GetMapping("/start")
     fun startGame(@RequestParam userId: Int, @RequestParam countLettersInWord: Int): ResponseEntity<Any> {
         val msgs = mutableListOf<MessageDto>()
-        val userGames = gameService.readUserGames(userId, msgs)
+        val userGames = gameService.readUserGames(userId)
         if (!canStartGame(userGames, msgs)) {
             return ResponseEntity.status(406).build()
         }
@@ -62,10 +62,11 @@ class GameController(
         if (userId == 0)
             msgs.add(MessageDto("userUID is empty"))
 
-        val userGames = gameService.readUserGames(userId, msgs)
         if (msgs.isNotEmpty()) {
             return ResponseEntity.status(406).build()
         }
+        val userGames = gameService.readUserGames(userId)
+
         val result = userGames.map {
             it.toEntity()
         }

@@ -26,7 +26,7 @@ fun getDescription(msgs: List<MessageDto>): String {
 fun canStartGame(games: List<GameDto>, msgs: MutableList<MessageDto>): Boolean {
     var count = 0
     for (game in games) {
-        if (game.status.equals(GameStatus.IN_GAME)) {
+        if (game.status.equals(GameStatus.IN_GAME.name)) {
             msgs.add(
                 MessageDto(
                     "Уже существует игра в статусе ${GameStatus.IN_GAME}: " +

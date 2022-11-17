@@ -1,9 +1,8 @@
 package app.logger
 
+import org.springframework.stereotype.Service
 import java.io.BufferedWriter
-import java.io.File
 import java.io.FileWriter
-import java.io.PrintWriter
 import java.util.*
 
 class Logger(

@@ -1,14 +1,16 @@
 package model
 
+import app.model.enumCollectilos.GameStatus
 import app.model.enumCollectilos.UserRole
 import app.model.enumCollectilos.UserStatus
-import org.apache.commons.codec.binary.Base64
 import org.springframework.security.crypto.bcrypt.BCrypt
 
-
 fun encode(pass: String): String {
-    val base64 = Base64()
     return BCrypt.hashpw(pass, BCrypt.gensalt())
+}
+
+fun isEmptyString(str: String): Boolean {
+    return str == "" || str.isEmpty()
 }
 
 fun defineUserRole(roleString: String): UserRole {
@@ -30,6 +32,12 @@ fun defineUserStatus(statusString: String): UserStatus {
     }
 }
 
-//fun convertStringToDate(string: String):LocalDate {
-//
-//}
+fun defineGameStatus(statusString: String): GameStatus {
+    return when (statusString) {
+        GameStatus.IN_GAME.name -> GameStatus.IN_GAME
+        GameStatus.NOT_IN_GAME.name -> GameStatus.NOT_IN_GAME
+        GameStatus.ERROR.name -> GameStatus.ERROR
+        GameStatus.FINISHED.name -> GameStatus.FINISHED
+        else -> GameStatus.NOT_DETERMINED
+    }
+}

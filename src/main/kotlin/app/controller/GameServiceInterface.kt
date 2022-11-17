@@ -1,20 +1,20 @@
 package app.controller
 
-import model.Entity.Game
+import app.dto.GameDto
+import app.dto.MessageDto
 import app.model.enumCollectilos.LetterStatus
-import model.Entity.Message
 
 interface GameServiceInterface {
-    fun createGame(game: Game, msgs: MutableList<Message>): Game?
-    fun foundUserGameInGame(userUid: String, gameUid: String, msgs: MutableList<Message>): Game?
+    fun createGame(game: GameDto, msgs: MutableList<MessageDto>): GameDto
+    fun foundUserGameInGame(userId: Int, gameId: Int, msgs: MutableList<MessageDto>): GameDto?
     fun attemptResult(
-        userUid: String,
-        gameUid: String,
+        userId: Int,
+        gameId: Int,
         attemptWord: String,
-        msgs: MutableList<Message>,
+        msgs: MutableList<MessageDto>,
         result: MutableMap<String, LetterStatus>
     )
 
-    fun readUserGames(userUid: String, msgs: MutableList<Message>): List<Game>
-    fun updateGames(game: Game, msgs: MutableList<Message>): Boolean
+    fun readUserGames(userId: Int): List<GameDto>
+    fun updateGames(game: GameDto, msgs: MutableList<MessageDto>): Boolean
 }

@@ -1,60 +1,55 @@
 package app.controller
 
-import app.controller.entityVO.Response
-import app.controller.entityVO.Status
-import app.controller.entityVO.UserVO
-import model.Entity.Message
-import model.Entity.User
+import app.dto.MessageDto
+import app.dto.UserDto
 import app.model.enumCollectilos.UserRole
 import app.model.enumCollectilos.UserStatus
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
 
 @Component
 @RestController
 @RequestMapping("/user")
 class UserController(
-    @Autowired
-    val userService: UserServiceInterface
+    @Autowired val userService: UserServiceInterface
 ) {
 
     @GetMapping("/check")
-    fun checkUser(@RequestParam login: String): Response {
-        val msgs = mutableListOf<Message>()
+    fun checkUser(@RequestParam login: String): ResponseEntity<Any> {
+        val msgs = mutableListOf<MessageDto>()
         val user = userService.findUser(login, msgs)
         return if (user != null && msgs.isEmpty()) {
-            Response(
-                Status.OK,
-                "",
-                UserVO(
-                    login = user.login,
-                    status = user.status.name,
-                    created = user.created.toString(),
-                    role = user.role.name
-                )
-            )
+            ResponseEntity.ok(user)
         } else {
-            return Response(Status.ERROR, "Login $login not found \n${getDescription(msgs)}")
+            ResponseEntity.status(406).build()
         }
     }
 
     @GetMapping("/save")
-    fun saveUser(@RequestParam login: String, @RequestParam pass: String): Response {
-        val msgs = mutableListOf<Message>()
+    fun saveUser(
+        @RequestParam login: String,
+        @RequestParam pass: String
+    ): ResponseEntity<Any> {
+        val msgs = mutableListOf<MessageDto>()
         userService.registerUser(
-            User(
+            UserDto(
+                id = 463454,
                 login = login,
                 pass = pass,
-                role = UserRole.USER,
-                status = UserStatus.ACTIVE,
-                created = LocalDate.now()
+                role = UserRole.USER.name,
+                status = UserStatus.ACTIVE.name,
+                created = LocalDate.now().toString()
             ), msgs
         )
         if (msgs.isEmpty()) {
-            return Response(Status.OK, "user will be saved. User login: $login")
+            return ResponseEntity.ok("user will be saved. User login: $login")
         }
-        return Response(Status.ERROR, getDescription(msgs))
+        return ResponseEntity.status(500).build()
     }
 }
